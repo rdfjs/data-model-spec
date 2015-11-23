@@ -4,10 +4,10 @@
 **Purpose:** This document proposes a uniform interface to represent RDF data in low-level JavaScript libraries.
 
 ## Design elements and principles
-- We define data interfaces to represent **triples**, **quads**, **IRIs**, **blank nodes**, **literals** and **variables**.
+- We define data interfaces to represent **triples**, **quads**, **named nodes**, **blank nodes**, **literals** and **variables**.
 - Instances of the interfaces created with different libraries should be interoperable.
 - Interfaces do _not_ specify how instances are stored in memory.
-- Interfaces mandate specific pre-defined methods such as `.equals()`.
+- Interfaces mandate specific pre-defined methods such as `.sameTerm()`.
 - Given the necessity of methods, plain objects (JSON) cannot be used.
 - Factory functions (e.g., `triple()`) or methods (e.g., `store.createTriple()`) create instances.
   - Should allow "upgrading" a plain object into a fully functional triple
@@ -18,17 +18,19 @@
 
 **Properties:**
 
-- `String .value` is refined by each interface which extends Node
+- None 
 
 **Methods:**
 
-- `.equals(Node other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `.sameTerm(Node other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
 
-### IRI extends Node
+### Symbol extends Node
+
+A node named with a URI.  The node is not a URI itsef.
 
 **Properties:**
 
-- `String .value` the IRI as a string (example: `http://example.org/resource`)
+- `String .uri` the IRI naming the node as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Node
 
@@ -66,14 +68,14 @@
 
 **Properties:**
 
-- `Node .graph` the named graph, which is an IRI, a BlankNode or NodeVariable.
+- `Node .why` the provenence, which may be a named node represenitng a document on the web which has this graph, or a BlankNode or NodeVariable. Also extednable for the results of infreence.
 
 ### DataFactory
 
 **Methods:**
 
-- `.iri(String iri)` returns a new instance of IRI.
-- `.blankNode()` returns a new instance of BlankNode.
+- `.sym(String iri)` returns a new instance of IRI.
+- `.bNode()` returns a new instance of BlankNode.
 - `.literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `.variable(String name)` returns a new instance of NodeVariable. This method is optional.
 - `.triple([Object])` returns a new instance of Triple. 
