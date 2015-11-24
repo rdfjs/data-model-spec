@@ -41,7 +41,7 @@
 **Properties:**
 
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
-- `String .language` the language as two character lower case BCP47 string
+- `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
 - `String .datatype` the datatype IRI as string
 
 ### NodeVariable extends Node
