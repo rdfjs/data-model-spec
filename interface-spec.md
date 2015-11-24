@@ -20,9 +20,13 @@
 
 - `String .value` is refined by each interface which extends Node
 
+TODO: read/write or read-only?
+
 **Methods:**
 
 - `.equals(Node other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+
+TODO: to what extent should we use typed signatures (`.equals(Node other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
 ### IRI extends Node
 
@@ -36,6 +40,8 @@
 
 - `String .value` blank node name as a string (example: `_:blank3`)
 
+TODO: Does the value always start with an underscore?
+
 ### Literal extends Node
 
 **Properties:**
@@ -44,11 +50,17 @@
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
 - `String .datatype` the datatype IRI as string
 
+TODO: What if the literal has no language? Does it always have a datatype?
+
 ### NodeVariable extends Node
+
+TODO: Why not just Variable?
 
 **Properties:**
 
 - `String .value` the name of the variable (example: `?a`)
+
+TODO: Does the value always start with a question mark?
 
 ### Triple
 
@@ -68,6 +80,8 @@
 
 - `Node .graph` the named graph, which is an IRI, a BlankNode or NodeVariable.
 
+TODO: Do we need to define a different interface, or is a quad simply a triple with a graph different from undefined?
+
 ### DataFactory
 
 **Methods:**
@@ -78,3 +92,21 @@
 - `.variable(String name)` returns a new instance of NodeVariable. This method is optional.
 - `.triple([Object])` returns a new instance of Triple. 
 - `.quad([Object])` returns a new instance of Quad.
+
+TODO: `.blankNode()` could/should have an optional suggested label.
+
+TODO: `.literal()` could have a more intelligent constructor (valid language strings are not valid IRIs and vice-versa).
+
+TODO: `.literal()` should support IRI datatype as well
+
+TODO: Can/should `.literal()` accept built-in types like integers?
+
+TODO: `.variable` is marked "optional", but what does this mean? Perhaps we need different stages of compatibility. Are quads optional, for instance?
+
+TODO: Can `.triple` and `.quad` also support three/four-part constructors?
+
+TODO: Can `.triple` and `.quad` also support simple strings, or should they be Nodes?
+
+TODO: Is the argument of `.triple` and `.quad` optional (or why the brackets)?
+
+TODO: Can `.triple` and `.quad` just be aliases of each other?
