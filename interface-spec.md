@@ -28,6 +28,11 @@ TODO: read/write or read-only?
 
 TODO: to what extent should we use typed signatures (`.equals(Node other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
+**Methods not specified:**
+
+- `.toString()` is not specified, therefore the results may vary for each implementation.
+The property `.value` and method `.toCanonical()` should be used to access the value of a term.
+
 ### IRI extends Node
 
 **Properties:**
