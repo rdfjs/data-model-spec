@@ -38,9 +38,7 @@ TODO: to what extent should we use typed signatures (`.equals(Node other)`) vers
 
 **Properties:**
 
-- `String .value` blank node name as a string (example: `_:blank3`)
-
-TODO: Does the value always start with an underscore?
+- `String .value` blank node name as a string without leading `_:` (example: `blank3`)
 
 ### Literal extends Node
 
@@ -58,9 +56,7 @@ TODO: Why not just Variable?
 
 **Properties:**
 
-- `String .value` the name of the variable (example: `?a`)
-
-TODO: Does the value always start with a question mark?
+- `String .value` the name of the variable without leading `?` (example: `a`)
 
 ### Triple
 
