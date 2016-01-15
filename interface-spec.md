@@ -20,8 +20,11 @@ This document provides a specification of a low level interface definition repre
 
 ### Term
 
-**Properties:**
+Abstract interface.
 
+**Properties:**
+- `String .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
+  Possible values include `"iri"`, `"bnode"`, `"literal"`, and `"variable"`.
 - `String .value` is refined by each interface which extends Term
 
 TODO: read/write or read-only?
@@ -36,12 +39,14 @@ TODO: to what extent should we use typed signatures (`.equals(Term other)`) vers
 
 **Properties:**
 
+- `String .termType` contains the constant `"iri"`.
 - `String .value` the IRI as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
 **Properties:**
 
+- `String .termType` contains the constant `"bnode"`.
 - `String .value` blank node name as a string (example: `_:blank3`)
 
 TODO: Does the value always start with an underscore?
@@ -50,6 +55,7 @@ TODO: Does the value always start with an underscore?
 
 **Properties:**
 
+- `String .termType` contains the constant `"literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
 - `String .datatype` the datatype IRI as string
@@ -60,6 +66,7 @@ TODO: What if the literal has no language? Does it always have a datatype?
 
 **Properties:**
 
+- `String .termType` contains the constant `"variable"`.
 - `String .value` the name of the variable (example: `?a`)
 
 TODO: Does the value always start with a question mark?
