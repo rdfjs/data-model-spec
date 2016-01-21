@@ -32,6 +32,9 @@ TODO: read/write or read-only?
 **Methods:**
 
 - `.equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `.toCanonical()` returns a canonical string representation of the term.
+  For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
+  Variables must return the variable name prefixed with a question mark (example: `?a`).
 
 TODO: to what extent should we use typed signatures (`.equals(Term other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
@@ -88,6 +91,15 @@ TODO: Does the value always start with a question mark?
 **Properties:**
 
 - `Term .graph` the named graph, which is an IRI, a BlankNode or Variable.
+
+**Methods:**
+
+- `.toCanonical()` returns a canonical string representation of the quad.
+  The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
+  Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
+  Quads that contain a none default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
+  For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
+  **The whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).**
 
 TODO: Do we need to define a different interface, or is a quad simply a triple with a graph different from undefined?
 
