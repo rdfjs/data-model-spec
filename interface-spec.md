@@ -15,6 +15,8 @@ This document provides a specification of a low level interface definition repre
 - Given the necessity of methods, plain objects (JSON) cannot be used.
 - Factory functions (e.g., `triple()`) or methods (e.g., `store.createTriple()`) create instances.
   - Should allow "upgrading" a plain object into a fully functional triple
+- Interfaces may have additional implementation specific properties. 
+  A list of these properties maintained on the [RDFJS Representation Task Force wiki](https://github.com/rdfjs/representation-task-force/wiki/Additional-properties).
 
 ## Data interfaces
 
