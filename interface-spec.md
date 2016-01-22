@@ -1,7 +1,7 @@
 # Interface Specification: RDF Representation
 
 ## Mission Statement
-This document provides a specification of a low level interface definition representing RDF data independent of a serialized format in a JavaScript environment. The taks force which defines this interface was formed by RDF JavaScript library developers with the wish to make existing and future librariers interoperable. This definition strives to provides the minimal necessary interface necessary to enable interoperability of libraries such as serializers, parsers and higher level accessors and manipulators.
+This document provides a specification of a low level interface definition representing RDF data independent of a serialized format in a JavaScript environment. The task force which defines this interface was formed by RDF JavaScript library developers with the wish to make existing and future libraries interoperable. This definition strives to provides the minimal necessary interface necessary to enable interoperability of libraries such as serializers, parsers and higher level accessors and manipulators.
 
 
 **Status:** This document is a _draft_.<br>
