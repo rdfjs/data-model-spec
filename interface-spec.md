@@ -58,7 +58,7 @@ TODO: Does the value always start with an underscore?
 - `String .termType` contains the constant `"literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
-- `String .datatype` the datatype IRI as string
+- `IRI .datatype` the datatype of the literal
 
 TODO: What if the literal has no language? Does it always have a datatype?
 
@@ -97,7 +97,7 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 
 - `.iri(String iri)` returns a new instance of IRI.
 - `.blankNode()` returns a new instance of BlankNode.
-- `.literal(String value, String language, String datatype)` returns a new instance of Literal.
+- `.literal(String value, String language, String|IRI datatype)` returns a new instance of Literal.
 - `.variable(String name)` returns a new instance of Variable. This method is optional.
 - `.triple([Object])` returns a new instance of Triple. 
 - `.quad([Object])` returns a new instance of Quad.
@@ -105,8 +105,6 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 TODO: `.blankNode()` could/should have an optional suggested label.
 
 TODO: `.literal()` could have a more intelligent constructor (valid language strings are not valid IRIs and vice-versa).
-
-TODO: `.literal()` should support IRI datatype as well
 
 TODO: Can/should `.literal()` accept built-in types like integers?
 
