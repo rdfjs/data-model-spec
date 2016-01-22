@@ -18,6 +18,9 @@ This document provides a specification of a low level interface definition repre
 
 ## Data interfaces
 
+![UML diagram](img/class_diagram.svg)
+![UML diagram](img/class_diagram.png)
+
 ### Term
 
 Abstract interface.
