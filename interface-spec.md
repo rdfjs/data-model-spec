@@ -31,7 +31,7 @@ TODO: read/write or read-only?
 
 **Methods:**
 
-- `.equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
 
 TODO: to what extent should we use typed signatures (`.equals(Term other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
@@ -81,7 +81,7 @@ TODO: Does the value always start with a question mark?
 
 **Methods:**
 
-- `Boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
+- `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
 
 ### Quad extends Triple
 
@@ -95,12 +95,12 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 
 **Methods:**
 
-- `.iri(String iri)` returns a new instance of IRI.
-- `.blankNode()` returns a new instance of BlankNode.
-- `.literal(String value, String language, String datatype)` returns a new instance of Literal.
-- `.variable(String name)` returns a new instance of Variable. This method is optional.
-- `.triple([Object])` returns a new instance of Triple. 
-- `.quad([Object])` returns a new instance of Quad.
+- `IRI .iri(String iri)` returns a new instance of IRI.
+- `BlankNode .blankNode()` returns a new instance of BlankNode.
+- `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
+- `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
+- `Triple .triple([Object])` returns a new instance of Triple.
+- `Quad .quad([Object])` returns a new instance of Quad.
 
 TODO: `.blankNode()` could/should have an optional suggested label.
 
