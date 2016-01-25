@@ -109,7 +109,7 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 - `.blankNode()` returns a new instance of BlankNode.
 - `.literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `.variable(String name)` returns a new instance of Variable. This method is optional.
-- `.defaultGraph()` returns an instance of DefaultGraph. This method should return a singleton.
+- `.defaultGraph()` returns an instance of DefaultGraph.
 - `.triple([Object])` returns a new instance of Triple. 
 - `.quad([Object])` returns a new instance of Quad.
 
