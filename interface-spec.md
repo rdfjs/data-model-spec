@@ -97,7 +97,7 @@ TODO: Does the value always start with a question mark?
 - `.toCanonical()` returns a canonical string representation of the quad.
   The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
-  Quads that contain a none default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
+  Quads that contain a non-default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
   For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
   **The whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).**
 
