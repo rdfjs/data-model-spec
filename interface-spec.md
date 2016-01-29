@@ -57,10 +57,11 @@ TODO: Does the value always start with an underscore?
 
 - `String .termType` contains the constant `"literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
-- `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
+- `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
 - `IRI .datatype` the datatype of the literal
 
-TODO: What if the literal has no language? Does it always have a datatype?
+If the literal has a language, the datatype IRI is `http://www.w3.org/1999/02/22-rdf-syntax-ns#langString`.
+Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://www.w3.org/2001/XMLSchema#string`.
 
 ### Variable extends Term
 
