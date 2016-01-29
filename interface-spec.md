@@ -13,7 +13,7 @@ This document provides a specification of a low level interface definition repre
 - Interfaces do _not_ specify how instances are stored in memory.
 - Interfaces mandate specific pre-defined methods such as `.equals()`.
 - Given the necessity of methods, plain objects (JSON) cannot be used.
-- Factory functions (e.g., `triple()`) or methods (e.g., `store.createTriple()`) create instances.
+- Factory functions (e.g., `quad()`) or methods (e.g., `store.createQuad()`) create instances.
   - Should allow "upgrading" a plain object into a fully functional triple
 
 ## Data interfaces
@@ -72,22 +72,19 @@ TODO: What if the literal has no language? Does it always have a datatype?
 TODO: Does the value always start with a question mark?
 
 ### Triple
+Triple is an alias of Quad.
+Triples always have `.graph` set to DefaultGraph.
+
+### Quad extends Triple
 
 **Properties:**
 
 - `Term .subject` the subject, which is an IRI, a BlankNode or Variable.
 - `Term .predicate` the predicate, which is an IRI or Variable.
 - `Term .object` the object, which is an IRI, a Literal, a BlankNode or Variable.
+- `Term .graph` the named graph, which is an IRI, DefaultGraph, BlankNode or Variable.
 
-**Methods:**
-
-- `Boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
-
-### Quad extends Triple
-
-**Properties:**
-
-- `Term .graph` the named graph, which is an IRI, a BlankNode or Variable.
+- `Boolean .equals(Quad other)` returns true if and only if the argument is a) of the same type b) has all components equal
 
 TODO: Do we need to define a different interface, or is a quad simply a triple with a graph different from undefined?
 
@@ -99,7 +96,7 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 - `.blankNode()` returns a new instance of BlankNode.
 - `.literal(String value, String language, String|IRI datatype)` returns a new instance of Literal.
 - `.variable(String name)` returns a new instance of Variable. This method is optional.
-- `.triple([Object])` returns a new instance of Triple. 
+- `Quad .triple([Object])` is an alias of `.quad`.
 - `.quad([Object])` returns a new instance of Quad.
 
 TODO: `.blankNode()` could/should have an optional suggested label.
