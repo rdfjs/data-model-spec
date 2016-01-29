@@ -1,8 +1,4 @@
-# Interface Specification: RDF Representation
-
-## Mission Statement
-This document provides a specification of a low level interface definition representing RDF data independent of a serialized format in a JavaScript environment. The task force which defines this interface was formed by RDF JavaScript library developers with the wish to make existing and future libraries interoperable. This definition strives to provides the minimal necessary interface necessary to enable interoperability of libraries such as serializers, parsers and higher level accessors and manipulators.
-
+# Interface Specification
 
 **Status:** This document is a _draft_.<br>
 **Purpose:** This document proposes a uniform interface to represent RDF data in low-level JavaScript libraries.
@@ -18,84 +14,72 @@ This document provides a specification of a low level interface definition repre
 
 ## Data interfaces
 
-### Term
-
-Abstract interface.
+### Node
 
 **Properties:**
-- `String .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
-  Possible values include `"iri"`, `"bnode"`, `"literal"`, and `"variable"`.
-- `String .value` is refined by each interface which extends Term
+
+- `String .value` is refined by each interface which extends Node
 
 TODO: read/write or read-only?
 
 **Methods:**
 
-- `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `.equals(Node other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
 
-TODO: to what extent should we use typed signatures (`.equals(Term other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
+TODO: to what extent should we use typed signatures (`.equals(Node other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
-### IRI extends Term
+**Methods not specified:**
+
+- `.toString()` is not specified, therefore the results may vary for each implementation.
+The property `.value` and method `.toCanonical()` should be used to access the value of a term.
+
+### IRI extends Node
 
 **Properties:**
 
-- `String .termType` contains the constant `"iri"`.
 - `String .value` the IRI as a string (example: `http://example.org/resource`)
 
-### BlankNode extends Term
+### BlankNode extends Node
 
 **Properties:**
 
-<<<<<<< HEAD
 - `String .value` blank node name as a string without leading `_:` (example: `blank3`)
-=======
-- `String .termType` contains the constant `"bnode"`.
-- `String .value` blank node name as a string (example: `_:blank3`)
 
-TODO: Does the value always start with an underscore?
->>>>>>> rdfjs/feature-cleanup
-
-### Literal extends Term
+### Literal extends Node
 
 **Properties:**
 
-- `String .termType` contains the constant `"literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`)
 - `String .datatype` the datatype IRI as string
 
 TODO: What if the literal has no language? Does it always have a datatype?
 
-### Variable extends Term
+### NodeVariable extends Node
+
+TODO: Why not just Variable?
 
 **Properties:**
 
-<<<<<<< HEAD
 - `String .value` the name of the variable without leading `?` (example: `a`)
-=======
-- `String .termType` contains the constant `"variable"`.
-- `String .value` the name of the variable (example: `?a`)
-
-TODO: Does the value always start with a question mark?
->>>>>>> rdfjs/feature-cleanup
 
 ### Triple
 
 **Properties:**
 
-- `Term .subject` the subject, which is an IRI, a BlankNode or Variable.
-- `Term .predicate` the predicate, which is an IRI or Variable.
-- `Term .object` the object, which is an IRI, a Literal, a BlankNode or Variable.
+- `Node .subject` the subject, which is an IRI, a BlankNode or NodeVariable.
+- `Node .predicate` the predicate, which is an IRI or NodeVariable.
+- `Node .object` the object, which is an IRI, a Literal, a BlankNode or NodeVariable.
 
 **Methods:**
 
-- `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
+- `Boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
 
 ### Quad extends Triple
 
 **Properties:**
 
-- `Term .graph` the named graph, which is an IRI, a BlankNode or Variable.
+- `Node .graph` the named graph, which is an IRI, a BlankNode or NodeVariable.
 
 TODO: Do we need to define a different interface, or is a quad simply a triple with a graph different from undefined?
 
@@ -103,12 +87,12 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 
 **Methods:**
 
-- `IRI .iri(String iri)` returns a new instance of IRI.
-- `BlankNode .blankNode()` returns a new instance of BlankNode.
-- `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
-- `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
-- `Triple .triple([Object])` returns a new instance of Triple.
-- `Quad .quad([Object])` returns a new instance of Quad.
+- `.iri(String iri)` returns a new instance of IRI.
+- `.blankNode()` returns a new instance of BlankNode.
+- `.literal(String value, String language, String datatype)` returns a new instance of Literal.
+- `.variable(String name)` returns a new instance of NodeVariable. This method is optional.
+- `.triple([Object])` returns a new instance of Triple. 
+- `.quad([Object])` returns a new instance of Quad.
 
 TODO: `.blankNode()` could/should have an optional suggested label.
 
@@ -122,7 +106,7 @@ TODO: `.variable` is marked "optional", but what does this mean? Perhaps we need
 
 TODO: Can `.triple` and `.quad` also support three/four-part constructors?
 
-TODO: Can `.triple` and `.quad` also support simple strings, or should they be Terms?
+TODO: Can `.triple` and `.quad` also support simple strings, or should they be Nodes?
 
 TODO: Is the argument of `.triple` and `.quad` optional (or why the brackets)?
 
