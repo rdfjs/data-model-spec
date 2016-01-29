@@ -77,6 +77,16 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 
 TODO: Does the value always start with a question mark?
 
+### DefaultGraph extends Term
+
+An instance of `DefaultGraph` represents the default graph.
+It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad`. 
+
+**Properties:**
+
+- `String .termType` contains the constant `"defaultGraph"`.
+- `String .value` contains an empty string as constant value.
+
 ### Triple
 Triple is an alias of Quad.
 Triples always have `.graph` set to DefaultGraph.
@@ -112,6 +122,7 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 - `BlankNode .blankNode()` returns a new instance of BlankNode.
 - `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
+- `.defaultGraph()` returns an instance of DefaultGraph.
 - `Triple .triple([Object])` returns a new instance of Triple.
 - `Quad .quad([Object])` returns a new instance of Quad.
 
