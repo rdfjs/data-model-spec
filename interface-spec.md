@@ -1,7 +1,7 @@
 # Interface Specification: RDF Representation
 
 ## Mission Statement
-This document provides a specification of a low level interface definition representing RDF data independent of a serialized format in a JavaScript environment. The taks force which defines this interface was formed by RDF JavaScript library developers with the wish to make existing and future librariers interoperable. This definition strives to provides the minimal necessary interface necessary to enable interoperability of libraries such as serializers, parsers and higher level accessors and manipulators.
+This document provides a specification of a low level interface definition representing RDF data independent of a serialized format in a JavaScript environment. The task force which defines this interface was formed by RDF JavaScript library developers with the wish to make existing and future libraries interoperable. This definition strives to provides the minimal necessary interface necessary to enable interoperability of libraries such as serializers, parsers and higher level accessors and manipulators.
 
 
 **Status:** This document is a _draft_.<br>
@@ -33,7 +33,7 @@ TODO: read/write or read-only?
 
 **Methods:**
 
-- `.equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
 - `.toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
@@ -97,6 +97,7 @@ Triples always have `.graph` set to DefaultGraph.
 - `.toCanonical()` returns a canonical string representation of the quad.
   The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
+- `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
   Quads that contain a non-default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
   For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
   **The whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).**
@@ -107,12 +108,12 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 
 **Methods:**
 
-- `.iri(String iri)` returns a new instance of IRI.
-- `.blankNode()` returns a new instance of BlankNode.
-- `.literal(String value, String language, String|IRI datatype)` returns a new instance of Literal.
-- `.variable(String name)` returns a new instance of Variable. This method is optional.
-- `Quad .triple([Object])` is an alias of `.quad`.
-- `.quad([Object])` returns a new instance of Quad.
+- `IRI .iri(String iri)` returns a new instance of IRI.
+- `BlankNode .blankNode()` returns a new instance of BlankNode.
+- `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
+- `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
+- `Triple .triple([Object])` returns a new instance of Triple.
+- `Quad .quad([Object])` returns a new instance of Quad.
 
 TODO: `.blankNode()` could/should have an optional suggested label.
 
