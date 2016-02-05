@@ -113,5 +113,5 @@ Triples always have `.graph` set to DefaultGraph.
 - `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
-- `Triple .triple([Object])` returns a new instance of Triple.
-- `Quad .quad([Object])` returns a new instance of Quad.
+- `Triple .triple(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Triple.
+- `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
