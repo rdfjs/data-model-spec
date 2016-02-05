@@ -29,16 +29,12 @@ Abstract interface.
   Possible values include `"iri"`, `"bnode"`, `"literal"`, and `"variable"`.
 - `String .value` is refined by each interface which extends Term
 
-TODO: read/write or read-only?
-
 **Methods:**
 
 - `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
 - `.toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
-
-TODO: to what extent should we use typed signatures (`.equals(Term other)`) versus actual JavaScript signatures (`.equals(other)`). The benefit of typed signatures is that you see the type inline; the drawback is that it is more specific than JavaScript itself. For ease of use, JavaScript might be preferred, specifying types in the explanation (or jsdoc-style).
 
 ### IRI extends Term
 
@@ -53,8 +49,6 @@ TODO: to what extent should we use typed signatures (`.equals(Term other)`) vers
 
 - `String .termType` contains the constant `"bnode"`.
 - `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
-
-TODO: Does the value always start with an underscore?
 
 ### Literal extends Term
 
@@ -74,8 +68,6 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 
 - `String .termType` contains the constant `"variable"`.
 - `String .value` the name of the variable without leading `?` (example: `a`)
-
-TODO: Does the value always start with a question mark?
 
 ### DefaultGraph extends Term
 
@@ -112,8 +104,6 @@ Triples always have `.graph` set to DefaultGraph.
   For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
   **The whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).**
 
-TODO: Do we need to define a different interface, or is a quad simply a triple with a graph different from undefined?
-
 ### DataFactory
 
 **Methods:**
@@ -125,19 +115,3 @@ TODO: Do we need to define a different interface, or is a quad simply a triple w
 - `.defaultGraph()` returns an instance of DefaultGraph.
 - `Triple .triple([Object])` returns a new instance of Triple.
 - `Quad .quad([Object])` returns a new instance of Quad.
-
-TODO: `.blankNode()` could/should have an optional suggested label.
-
-TODO: `.literal()` could have a more intelligent constructor (valid language strings are not valid IRIs and vice-versa).
-
-TODO: Can/should `.literal()` accept built-in types like integers?
-
-TODO: `.variable` is marked "optional", but what does this mean? Perhaps we need different stages of compatibility. Are quads optional, for instance?
-
-TODO: Can `.triple` and `.quad` also support three/four-part constructors?
-
-TODO: Can `.triple` and `.quad` also support simple strings, or should they be Terms?
-
-TODO: Is the argument of `.triple` and `.quad` optional (or why the brackets)?
-
-TODO: Can `.triple` and `.quad` just be aliases of each other?
