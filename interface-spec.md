@@ -32,7 +32,7 @@ Abstract interface.
 **Methods:**
 
 - `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
-- `.toCanonical()` returns a canonical string representation of the term.
+- `String .toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
 
@@ -96,7 +96,7 @@ Triples always have `.graph` set to DefaultGraph.
 
 **Methods:**
 
-- `.toCanonical()` returns a canonical string representation of the quad.
+- `String .toCanonical()` returns a canonical string representation of the quad.
   The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
 - `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
@@ -112,6 +112,6 @@ Triples always have `.graph` set to DefaultGraph.
 - `BlankNode .blankNode()` returns a new instance of BlankNode.
 - `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
-- `.defaultGraph()` returns an instance of DefaultGraph.
+- `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Triple .triple([Object])` returns a new instance of Triple.
 - `Quad .quad([Object])` returns a new instance of Quad.
