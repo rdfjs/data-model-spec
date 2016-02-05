@@ -102,7 +102,7 @@ Triples always have `.graph` set to DefaultGraph.
 - `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
   Quads that contain a non-default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
   For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
-  **The whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).**
+  the whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).
 
 ### DataFactory
 
