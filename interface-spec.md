@@ -52,7 +52,7 @@ TODO: to what extent should we use typed signatures (`.equals(Term other)`) vers
 **Properties:**
 
 - `String .termType` contains the constant `"bnode"`.
-- `String .value` blank node name as a string (example: `_:blank3`)
+- `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
 
 TODO: Does the value always start with an underscore?
 
@@ -73,7 +73,7 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 **Properties:**
 
 - `String .termType` contains the constant `"variable"`.
-- `String .value` the name of the variable (example: `?a`)
+- `String .value` the name of the variable without leading `?` (example: `a`)
 
 TODO: Does the value always start with a question mark?
 
