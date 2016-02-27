@@ -7,3 +7,4 @@ The focus on this first [low level](https://github.com/rdfjs/rdfjs.org/wiki/Arch
 
 This repository contains documents created by the Representation Task Force:
 - [Interface Specification (Low Level)](https://github.com/rdfjs/representation-task-force/blob/master/interface-spec.md)
+- [Interface Primer](interface-primer.md)
