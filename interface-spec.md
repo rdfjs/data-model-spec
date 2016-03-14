@@ -33,7 +33,7 @@ Abstract interface.
 
 **Methods:**
 
-- `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `boolean .equals(Term other)` returns true if and only if the strings returned by .toCanonical() are equal
 - `String .toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
@@ -43,14 +43,14 @@ Abstract interface.
 **Properties:**
 
 - `String .termType` contains the constant `"iri"`.
-- `String .value` the IRI as a string (example: `http://example.org/resource`)
+- `String .iri` the IRI as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
 **Properties:**
 
 - `String .termType` contains the constant `"bnode"`.
-- `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
+- `String .id` blank node identifier as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
 
 ### Literal extends Term
 
@@ -69,7 +69,7 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 **Properties:**
 
 - `String .termType` contains the constant `"variable"`.
-- `String .value` the name of the variable without leading `?` (example: `a`)
+- `String .name` the name of the variable without leading `?` (example: `a`)
 
 ### DefaultGraph extends Term
 
@@ -79,7 +79,6 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 **Properties:**
 
 - `String .termType` contains the constant `"defaultGraph"`.
-- `String .value` contains an empty string as constant value.
 
 ### Triple
 Triple is an alias of Quad.
