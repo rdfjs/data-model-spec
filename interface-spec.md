@@ -117,3 +117,56 @@ Triples always have `.graph` set to DefaultGraph.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Triple .triple(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Triple.
 - `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
+
+## Stream interfaces
+
+Streams are used only in a readable manner.
+This requires only a single queue per stream, which simplifies implementations and doesn't have performance drawbacks, compared to writeable streams.
+
+### Stream extends EventEmitter
+
+**Methods:**
+
+- `Quad .read()`
+  This method pulls a quad out of the internal buffer and returns it.
+  If there is no quad available, then it will return null. 
+
+**Events:**
+
+- `readable`
+  When a quad can be read from the stream, it will emit this event. 
+
+- `end`
+  This event fires when there will be no more quads to read.
+
+- `error`
+  This event fires if any error occurs.
+  The error message is forwarded to the event listener.
+
+- `data`
+  This event is emitted for every quad that can be read from the stream.
+  The quad is forwarded to the event listener.
+
+### Source
+
+- `Stream .read([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
+  Returns a stream that processes all quads matching the pattern.
+
+### Sink
+
+- `undefined .write(Stream stream)`
+  Writes all quads from the stream to the sink.
+
+### Store extends Source, Sink
+
+- `EventEmitter .remove(Stream stream)`
+  Removes all streamed quads.
+  The `end` and `error` events are used like described in the `Stream` interface.
+
+- `EventEmitter .removeMatches([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
+  All quads matching the pattern will be removed.
+  The `end` and `error` events are used like described in the `Stream` interface.
+
+- `EventEmitter .deleteGraph(IRI|String graph)`
+  Deletes the given named graph.
+  The `end` and `error` events are used like described in the `Stream` interface.
