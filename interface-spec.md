@@ -82,10 +82,10 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 - `String .value` contains an empty string as constant value.
 
 ### Triple
-Triple is an alias of Quad.
-Triples always have `.graph` set to DefaultGraph.
 
-### Quad extends Triple
+Triple is an alias of Quad.
+
+### Quad
 
 **Properties:**
 
@@ -101,7 +101,7 @@ Triples always have `.graph` set to DefaultGraph.
 - `String .toCanonical()` returns a canonical string representation of the quad.
   The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
-- `boolean .equals(Triple other)` returns true if and only if the argument is a) of the same type b) has all components equal
+- `boolean .equals(Quad other)` returns true if and only if the argument is a) of the same type b) has all components equal
   Quads that contain a non-default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
   For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
   the whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).
@@ -115,5 +115,5 @@ Triples always have `.graph` set to DefaultGraph.
 - `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
-- `Triple .triple(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Triple.
+- `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
 - `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
