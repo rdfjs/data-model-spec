@@ -15,7 +15,7 @@ This document provides a specification of a low level interface definition repre
 - Given the necessity of methods, plain objects (JSON) cannot be used.
 - Factory functions (e.g., `quad()`) or methods (e.g., `store.createQuad()`) create instances.
   - Should allow "upgrading" a plain object into a fully functional triple
-- Interfaces may have additional implementation specific properties. 
+- Interfaces may have additional implementation specific properties.
   A list of these properties maintained on the [RDFJS Representation Task Force wiki](https://github.com/rdfjs/representation-task-force/wiki/Additional-properties).
 
 ## Data interfaces
@@ -74,7 +74,7 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 ### DefaultGraph extends Term
 
 An instance of `DefaultGraph` represents the default graph.
-It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad`. 
+It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad`.
 
 **Properties:**
 
@@ -108,11 +108,17 @@ Triple is an alias of Quad.
 
 ### DataFactory
 
+For default values of the instance properties, see the individual [interface
+definitions](#data-interfaces)
+
 **Methods:**
 
 - `IRI .iri(String iri)` returns a new instance of IRI.
 - `BlankNode .blankNode()` returns a new instance of BlankNode.
-- `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
+- Literal .literal(String value, [String languageOrDatatype]) returns a new
+  instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
+  constructed with that IRI, and is used for the value of `.datatype`.
+  Otherwise languageOrDatatype is used for the value of `.language`.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
