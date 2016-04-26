@@ -149,12 +149,12 @@ This requires only a single queue per stream, which simplifies implementations a
 
 ### Source
 
-- `Stream .read([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
+- `Stream .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
   Returns a stream that processes all quads matching the pattern.
 
 ### Sink
 
-- `undefined .write(Stream stream)`
+- `undefined .import(Stream stream)`
   Writes all quads from the stream to the sink.
 
 ### Store extends Source, Sink
