@@ -115,7 +115,9 @@ definitions](#data-interfaces)
 **Methods:**
 
 - `NamedNode .namedNode(String iri)` returns a new instance of NamedNode.
-- `BlankNode .blankNode()` returns a new instance of BlankNode.
+- `BlankNode .blankNode([String identifier])` returns a new instance of BlankNode.
+  The optional identifier parameter is assigned to `.value`.
+  If the label parameter is undefined a new value is generated for each call.
 - Literal .literal(String value, [String languageOrDatatype]) returns a new
   instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
   constructed with that IRI, and is used for the value of `.datatype`.
@@ -136,12 +138,12 @@ This requires only a single queue per stream, which simplifies implementations a
 
 - `Quad .read()`
   This method pulls a quad out of the internal buffer and returns it.
-  If there is no quad available, then it will return null. 
+  If there is no quad available, then it will return null.
 
 **Events:**
 
 - `readable`
-  When a quad can be read from the stream, it will emit this event. 
+  When a quad can be read from the stream, it will emit this event.
 
 - `end`
   This event fires when there will be no more quads to read.
