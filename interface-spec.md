@@ -111,7 +111,9 @@ Triple is an alias of Quad.
 **Methods:**
 
 - `IRI .iri(String iri)` returns a new instance of IRI.
-- `BlankNode .blankNode()` returns a new instance of BlankNode.
+- `BlankNode .blankNode([String identifier])` returns a new instance of BlankNode.
+  The optional identifier parameter is assigned to `.value`.
+  If the label parameter is undefined a new value is generated for each call. 
 - `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
