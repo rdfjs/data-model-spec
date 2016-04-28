@@ -108,11 +108,17 @@ Triple is an alias of Quad.
 
 ### DataFactory
 
+For default values of the instance properties, see the individual [interface
+definitions](#data-interfaces)
+
 **Methods:**
 
 - `NamedNode .namedNode(String iri)` returns a new instance of NamedNode.
 - `BlankNode .blankNode()` returns a new instance of BlankNode.
-- `Literal .literal(String value, String language, String datatype)` returns a new instance of Literal.
+- Literal .literal(String value, [String languageOrDatatype]) returns a new
+  instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
+  constructed with that IRI, and is used for the value of `.datatype`.
+  Otherwise languageOrDatatype is used for the value of `.language`.
 - `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
