@@ -37,6 +37,7 @@ Abstract interface.
 - `String .toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
+  DefaultGraph must return an empty string.
 
 ### NamedNode extends Term
 
