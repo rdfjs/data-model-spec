@@ -156,6 +156,10 @@ This requires only a single queue per stream, which simplifies implementations a
   This event is emitted for every quad that can be read from the stream.
   The quad is forwarded to the event listener.
 
+- `prefix`
+  This event is emitted every time a prefix map occurs in the stream.
+  The prefix map is forwarded to the event listener.
+
 ### Source
 
 - `Stream .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
