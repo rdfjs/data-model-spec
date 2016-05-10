@@ -158,15 +158,28 @@ This requires only a single queue per stream, which simplifies implementations a
 
 ### Source
 
+A Source is an object that emits quads.
+It can contain quads but also generate them on the fly.
+For example, parsers and transformations which generate quads can implement the Source interface.
+
 - `Stream .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
   Returns a stream that processes all quads matching the pattern.
 
 ### Sink
 
+A Sink is an object that consumes quads.
+It can store the quads or do some further processing.
+For example serializers and transformations which consume quads can implement the Sink interface.
+
 - `undefined .import(Stream stream)`
   Writes all quads from the stream to the sink.
 
 ### Store extends Source, Sink
+
+A Store is an object that usually used to persist quads.
+The interface allows removing quads, beside read and write access.
+The quads can be stored locally or remotely.
+Access to stores LDP or SPARQL endpoints can be implemented with a Store inteface.
 
 - `EventEmitter .remove(Stream stream)`
   Removes all streamed quads.
