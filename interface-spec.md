@@ -109,8 +109,8 @@ Triple is an alias of Quad.
 
 ### DataFactory
 
-For default values of the instance properties, see the individual [interface
-definitions](#data-interfaces)
+For default values of the instance properties and valid values requirements,
+see the individual [interface definitions](#data-interfaces)
 
 **Methods:**
 
