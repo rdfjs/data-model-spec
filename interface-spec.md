@@ -109,20 +109,19 @@ Triple is an alias of Quad.
 
 ### DataFactory
 
-For default values of the instance properties, see the individual [interface
-definitions](#data-interfaces)
+For default values of the instance properties and valid values requirements,
+see the individual [interface definitions](#data-interfaces)
 
 **Methods:**
 
-- `NamedNode .namedNode(String iri)` returns a new instance of NamedNode.
-- `BlankNode .blankNode([String identifier])` returns a new instance of BlankNode.
-  The optional identifier parameter is assigned to `.value`.
-  If the label parameter is undefined a new value is generated for each call.
-- Literal .literal(String value, [String languageOrDatatype]) returns a new
+- `NamedNode .namedNode(String value)` returns a new instance of NamedNode.
+- `BlankNode .blankNode([String value])` returns a new instance of BlankNode.
+  If the value parameter is undefined a new identifier for the blank node is generated for each call.
+- `Literal .literal(String value, [String languageOrDatatype])` returns a new
   instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
   constructed with that IRI, and is used for the value of `.datatype`.
   Otherwise languageOrDatatype is used for the value of `.language`.
-- `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
+- `Variable .variable(String value)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
 - `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
