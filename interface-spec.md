@@ -27,8 +27,10 @@ This document provides a specification of a low level interface definition repre
 Abstract interface.
 
 **Properties:**
-- `String .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
-  Possible values include `"iri"`, `"bnode"`, `"literal"`, and `"variable"`.
+- `String .valueType` identifies the concrete type of the term value (and
+  therefore identifies the interface of the term, since Term itself is not
+  directly instantiated). Possible values include: `"iri"`, `"bnode"`,
+  `"literal"`, and `"variable"`.
 - `String .value` is refined by each interface which extends Term
 
 **Methods:**
@@ -43,21 +45,21 @@ Abstract interface.
 
 **Properties:**
 
-- `String .termType` contains the constant `"iri"`.
+- `String .valueType` contains the constant `"iri"`.
 - `String .value` the IRI as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"bnode"`.
+- `String .valueType` contains the constant `"bnode"`.
 - `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
 
 ### Literal extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"literal"`.
+- `String .valueType` contains the constant `"literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
 - `IRI .datatype` the datatype of the literal
@@ -69,7 +71,7 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 
 **Properties:**
 
-- `String .termType` contains the constant `"variable"`.
+- `String .valueType` contains the constant `"variable"`.
 - `String .value` the name of the variable without leading `?` (example: `a`)
 
 ### DefaultGraph extends Term
@@ -79,7 +81,7 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 
 **Properties:**
 
-- `String .termType` contains the constant `"defaultGraph"`.
+- `String .valueType` contains the constant `"defaultGraph"`.
 - `String .value` contains an empty string as constant value.
 
 ### Triple
