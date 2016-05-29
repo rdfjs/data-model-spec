@@ -20,7 +20,7 @@ This document provides a specification of a low level interface definition repre
 
 ## Data interfaces
 
-![UML diagram](img/class_diagram.png)
+![UML data interface diagram](img/data_diagram.png)
 
 ### Term
 
@@ -130,6 +130,8 @@ see the individual [interface definitions](#data-interfaces)
 
 Streams are used only in a readable manner.
 This requires only a single queue per stream, which simplifies implementations and doesn't have performance drawbacks, compared to writeable streams.
+
+![UML stream interface diagram](img/stream_diagram.png)
 
 ### Stream extends EventEmitter
 
