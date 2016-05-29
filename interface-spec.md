@@ -28,7 +28,7 @@ Abstract interface.
 
 **Properties:**
 - `String .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
-  Possible values include `"iri"`, `"bnode"`, `"literal"`, and `"variable"`.
+  Possible values include `"NamedNode"`, `"BlankNode"`, `"Literal"`, `"Variable"` and `"DefaultGraph"`.
 - `String .value` is refined by each interface which extends Term
 
 **Methods:**
@@ -43,21 +43,21 @@ Abstract interface.
 
 **Properties:**
 
-- `String .termType` contains the constant `"iri"`.
+- `String .termType` contains the constant `"NamedNode"`.
 - `String .value` the IRI as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"bnode"`.
+- `String .termType` contains the constant `"BlankNode"`.
 - `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
 
 ### Literal extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"literal"`.
+- `String .termType` contains the constant `"Literal"`.
 - `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
 - `IRI .datatype` the datatype of the literal
@@ -69,7 +69,7 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 
 **Properties:**
 
-- `String .termType` contains the constant `"variable"`.
+- `String .termType` contains the constant `"Variable"`.
 - `String .value` the name of the variable without leading `?` (example: `a`)
 
 ### DefaultGraph extends Term
@@ -79,7 +79,7 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 
 **Properties:**
 
-- `String .termType` contains the constant `"defaultGraph"`.
+- `String .termType` contains the constant `"DefaultGraph"`.
 - `String .value` contains an empty string as constant value.
 
 ### Triple
@@ -109,20 +109,19 @@ Triple is an alias of Quad.
 
 ### DataFactory
 
-For default values of the instance properties, see the individual [interface
-definitions](#data-interfaces)
+For default values of the instance properties and valid values requirements,
+see the individual [interface definitions](#data-interfaces)
 
 **Methods:**
 
-- `NamedNode .namedNode(String iri)` returns a new instance of NamedNode.
-- `BlankNode .blankNode([String identifier])` returns a new instance of BlankNode.
-  The optional identifier parameter is assigned to `.value`.
-  If the label parameter is undefined a new value is generated for each call.
-- Literal .literal(String value, [String languageOrDatatype]) returns a new
+- `NamedNode .namedNode(String value)` returns a new instance of NamedNode.
+- `BlankNode .blankNode([String value])` returns a new instance of BlankNode.
+  If the value parameter is undefined a new identifier for the blank node is generated for each call.
+- `Literal .literal(String value, [String languageOrDatatype])` returns a new
   instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
   constructed with that IRI, and is used for the value of `.datatype`.
   Otherwise languageOrDatatype is used for the value of `.language`.
-- `Variable .variable(String name)` returns a new instance of Variable. This method is optional.
+- `Variable .variable(String value)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
 - `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
@@ -156,17 +155,34 @@ This requires only a single queue per stream, which simplifies implementations a
   This event is emitted for every quad that can be read from the stream.
   The quad is forwarded to the event listener.
 
+- `prefix`
+  This event is emitted every time a prefix map occurs in the stream.
+  The prefix map is forwarded to the event listener.
+
 ### Source
+
+A Source is an object that emits quads.
+It can contain quads but also generate them on the fly.
+For example, parsers and transformations which generate quads can implement the Source interface.
 
 - `Stream .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
   Returns a stream that processes all quads matching the pattern.
 
 ### Sink
 
+A Sink is an object that consumes quads.
+It can store the quads or do some further processing.
+For example serializers and transformations which consume quads can implement the Sink interface.
+
 - `undefined .import(Stream stream)`
   Writes all quads from the stream to the sink.
 
 ### Store extends Source, Sink
+
+A Store is an object that usually used to persist quads.
+The interface allows removing quads, beside read and write access.
+The quads can be stored locally or remotely.
+Access to stores LDP or SPARQL endpoints can be implemented with a Store inteface.
 
 - `EventEmitter .remove(Stream stream)`
   Removes all streamed quads.
