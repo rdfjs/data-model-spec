@@ -27,14 +27,14 @@ This document provides a specification of a low level interface definition repre
 Abstract interface.
 
 **Properties:**
-- `String .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
+- `string .termType` contains a value that identifies the concrete interface of the term, since Term itself is not directly instantiated.
   Possible values include `"NamedNode"`, `"BlankNode"`, `"Literal"`, `"Variable"` and `"DefaultGraph"`.
-- `String .value` is refined by each interface which extends Term
+- `string .value` is refined by each interface which extends Term
 
 **Methods:**
 
 - `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
-- `String .toCanonical()` returns a canonical string representation of the term.
+- `string .toCanonical()` returns a canonical string representation of the term.
   For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Variables must return the variable name prefixed with a question mark (example: `?a`).
   DefaultGraph must return an empty string.
@@ -43,23 +43,23 @@ Abstract interface.
 
 **Properties:**
 
-- `String .termType` contains the constant `"NamedNode"`.
-- `String .value` the IRI as a string (example: `http://example.org/resource`)
+- `string .termType` contains the constant `"NamedNode"`.
+- `string .value` the IRI as a string (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"BlankNode"`.
-- `String .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
+- `string .termType` contains the constant `"BlankNode"`.
+- `string .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
 
 ### Literal extends Term
 
 **Properties:**
 
-- `String .termType` contains the constant `"Literal"`.
-- `String .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
-- `String .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
+- `string .termType` contains the constant `"Literal"`.
+- `string .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
+- `string .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
 - `IRI .datatype` the datatype of the literal
 
 If the literal has a language, the datatype IRI is `http://www.w3.org/1999/02/22-rdf-syntax-ns#langString`.
@@ -69,8 +69,8 @@ Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://w
 
 **Properties:**
 
-- `String .termType` contains the constant `"Variable"`.
-- `String .value` the name of the variable without leading `?` (example: `a`)
+- `string .termType` contains the constant `"Variable"`.
+- `string .value` the name of the variable without leading `?` (example: `a`)
 
 ### DefaultGraph extends Term
 
@@ -79,8 +79,8 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 
 **Properties:**
 
-- `String .termType` contains the constant `"DefaultGraph"`.
-- `String .value` contains an empty string as constant value.
+- `string .termType` contains the constant `"DefaultGraph"`.
+- `string .value` contains an empty string as constant value.
 
 ### Triple
 
@@ -99,7 +99,7 @@ Triple is an alias of Quad.
 
 **Methods:**
 
-- `String .toCanonical()` returns a canonical string representation of the quad.
+- `string .toCanonical()` returns a canonical string representation of the quad.
   The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
   Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
 - `boolean .equals(Quad other)` returns true if and only if the argument is a) of the same type b) has all components equal
@@ -114,14 +114,14 @@ see the individual [interface definitions](#data-interfaces)
 
 **Methods:**
 
-- `NamedNode .namedNode(String value)` returns a new instance of NamedNode.
-- `BlankNode .blankNode([String value])` returns a new instance of BlankNode.
+- `NamedNode .namedNode(string value)` returns a new instance of NamedNode.
+- `BlankNode .blankNode([string value])` returns a new instance of BlankNode.
   If the value parameter is undefined a new identifier for the blank node is generated for each call.
-- `Literal .literal(String value, [String languageOrDatatype])` returns a new
+- `Literal .literal(string value, [string languageOrDatatype])` returns a new
   instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
   constructed with that IRI, and is used for the value of `.datatype`.
   Otherwise languageOrDatatype is used for the value of `.language`.
-- `Variable .variable(String value)` returns a new instance of Variable. This method is optional.
+- `Variable .variable(string value)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
 - `Quad .triple(Term subject, Term predicate, Term object)` returns a new instance of Quad with `.graph` set to DefaultGraph.
 - `Quad .quad(Term subject, Term predicate, Term object, [Term graph])` returns a new instance of Quad.
@@ -194,6 +194,6 @@ Access to stores LDP or SPARQL endpoints can be implemented with a Store intefac
   All quads matching the pattern will be removed.
   The `end` and `error` events are used like described in the `Stream` interface.
 
-- `EventEmitter .deleteGraph(IRI|String graph)`
+- `EventEmitter .deleteGraph(IRI|string graph)`
   Deletes the given named graph.
   The `end` and `error` events are used like described in the `Stream` interface.
