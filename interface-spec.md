@@ -197,3 +197,21 @@ Access to stores LDP or SPARQL endpoints can be implemented with a Store intefac
 - `EventEmitter .deleteGraph(IRI|string graph)`
   Deletes the given named graph.
   The `end` and `error` events are used like described in the `Stream` interface.
+
+### Reader
+
+A Reader is an object that translates quads from a custom format to a Source object.
+The quads in custom format are read from a Readable Stream.
+Implementations may support reading from addition data types.
+
+- `Source .read(stream.Readable stream)`
+  Creates a Source which reads quads in custom format from `stream`
+
+### Writer
+
+A Writer is an object that translates quads from a Sink object to a custom format.
+The quads in custom format are written to a Writeable Stream.
+Implementations may support writing to addition data types.
+
+- `Sink .write(stream.Writeable stream)`
+  Create a Sink which write quads in custom format to `stream`
