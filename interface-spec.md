@@ -95,8 +95,6 @@ Triple is an alias of Quad.
 - `Term .object` the object, which is an IRI, a Literal, a BlankNode or Variable.
 - `Term .graph` the named graph, which is an IRI, DefaultGraph, BlankNode or Variable.
 
-- `Boolean .equals(Quad other)` returns true if and only if the argument is a) of the same type b) has all components equal
-
 **Methods:**
 
 - `string .toCanonical()` returns a canonical string representation of the quad.
