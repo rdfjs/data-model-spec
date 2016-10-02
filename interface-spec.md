@@ -8,7 +8,7 @@ This document provides a specification of a low level interface definition repre
 **Purpose:** This document proposes a uniform interface to represent RDF data in low-level JavaScript libraries.
 
 ## Design elements and principles
-- We define data interfaces to represent **triples**, **quads**, **IRIs**, **blank nodes**, **literals** and **variables**.
+- We define data interfaces to represent **triples**, **quads**, **named nodes**, **blank nodes**, **literals** and **variables**.
 - Instances of the interfaces created with different libraries should be interoperable.
 - Interfaces do _not_ specify how instances are stored in memory.
 - Interfaces mandate specific pre-defined methods such as `.equals()`.
@@ -40,7 +40,7 @@ Abstract interface.
 **Properties:**
 
 - `string .termType` contains the constant `"NamedNode"`.
-- `string .value` the IRI as a string (example: `http://example.org/resource`)
+- `string .value` the IRI of the named node (example: `http://example.org/resource`)
 
 ### BlankNode extends Term
 
@@ -56,10 +56,10 @@ Abstract interface.
 - `string .termType` contains the constant `"Literal"`.
 - `string .value` the text value, unescaped, without language or type (example: `Brad Pitt`)
 - `string .language` the language as lowercase [BCP47](http://tools.ietf.org/html/bcp47) string (examples: `en`, `en-gb`) or an empty string if the literal has no language.
-- `IRI .datatype` the datatype of the literal
+- `NamedNode .datatype` a NamedNode whose IRI represents the datatype of the literal
 
-If the literal has a language, the datatype IRI is `http://www.w3.org/1999/02/22-rdf-syntax-ns#langString`.
-Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://www.w3.org/2001/XMLSchema#string`.
+If the literal has a language, its datatype has the IRI `http://www.w3.org/1999/02/22-rdf-syntax-ns#langString`.
+Otherwise, if no datatype is explicitly specified, the datatype has the IRI `http://www.w3.org/2001/XMLSchema#string`.
 
 ### Variable extends Term
 
@@ -86,10 +86,10 @@ Triple is an alias of Quad.
 
 **Properties:**
 
-- `Term .subject` the subject, which is an IRI, a BlankNode or Variable.
-- `Term .predicate` the predicate, which is an IRI or Variable.
-- `Term .object` the object, which is an IRI, a Literal, a BlankNode or Variable.
-- `Term .graph` the named graph, which is an IRI, DefaultGraph, BlankNode or Variable.
+- `Term .subject` the subject, which is a NamedNode, BlankNode or Variable.
+- `Term .predicate` the predicate, which is a NamedNode or Variable.
+- `Term .object` the object, which is a NamedNode, Literal, BlankNode or Variable.
+- `Term .graph` the named graph, which is a DefaultGraph, NamedNode, BlankNode or Variable.
 
 **Methods:**
 
@@ -106,8 +106,7 @@ see the individual [interface definitions](#data-interfaces)
 - `BlankNode .blankNode([string value])` returns a new instance of BlankNode.
   If the value parameter is undefined a new identifier for the blank node is generated for each call.
 - `Literal .literal(string value, [string languageOrDatatype])` returns a new
-  instance of Literal. If languageOrDatatype is an IRI, then a NamedNode is
-  constructed with that IRI, and is used for the value of `.datatype`.
+  instance of Literal. If languageOrDatatype is a NamedNode, then it is used for the value of `.datatype`.
   Otherwise languageOrDatatype is used for the value of `.language`.
 - `Variable .variable(string value)` returns a new instance of Variable. This method is optional.
 - `DefaultGraph .defaultGraph()` returns an instance of DefaultGraph.
@@ -182,6 +181,6 @@ Access to stores LDP or SPARQL endpoints can be implemented with a Store intefac
   All quads matching the pattern will be removed.
   The `end` and `error` events are used like described in the `Stream` interface.
 
-- `EventEmitter .deleteGraph(IRI|string graph)`
+- `EventEmitter .deleteGraph(Term|string graph)`
   Deletes the given named graph.
   The `end` and `error` events are used like described in the `Stream` interface.
