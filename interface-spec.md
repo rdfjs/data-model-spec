@@ -34,10 +34,6 @@ Abstract interface.
 **Methods:**
 
 - `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
-- `string .toCanonical()` returns a canonical string representation of the term.
-  For IRIs, BlankNodes and Literals the [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
-  Variables must return the variable name prefixed with a question mark (example: `?a`).
-  DefaultGraph must return an empty string.
 
 ### NamedNode extends Term
 
@@ -97,13 +93,7 @@ Triple is an alias of Quad.
 
 **Methods:**
 
-- `string .toCanonical()` returns a canonical string representation of the quad.
-  The [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) must be used.
-  Terms must be represented as defined in the `.toCanonical()` method of the Term interface.
 - `boolean .equals(Quad other)` returns true if and only if the argument is a) of the same type b) has all components equal
-  Quads that contain a non-default graph must add the graph as defined in the [N-Quads specification](https://www.w3.org/TR/n-quads/).
-  For that use case the definition of [N-Triples canonical form](https://www.w3.org/TR/n-triples/#canonical-ntriples) is extended:
-  the whitespace following subject, predicate, object and graph MUST be a single space, (U+0020).
 
 ### DataFactory
 
