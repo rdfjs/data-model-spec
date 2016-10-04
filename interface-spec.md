@@ -33,7 +33,7 @@ Abstract interface.
 
 **Methods:**
 
-- `boolean .equals(Term other)` returns true if and only if the argument is a) of the same type b) has the same contents (value and, if applicable, type or language)
+- `boolean .equals(Term other)` returns `true` if and only if `other` has the same `termType` and the same contents (as defined by concrete subclasses).
 
 ### NamedNode extends Term
 
@@ -42,12 +42,20 @@ Abstract interface.
 - `string .termType` contains the constant `"NamedNode"`.
 - `string .value` the IRI as a string (example: `http://example.org/resource`)
 
+**Methods:**
+
+- `boolean .equals(Term other)` returns `true` if and only if `other` has `termType` `"NamedNode"` and the same `value`.
+
 ### BlankNode extends Term
 
 **Properties:**
 
 - `string .termType` contains the constant `"BlankNode"`.
 - `string .value` blank node name as a string, without any serialization specific prefixes, e.g. when parsing, if the data was sourced from Turtle, remove _:, if it was sourced from RDF/XML, do not change the blank node name (example: `blank3`)
+
+**Methods:**
+
+- `boolean .equals(Term other)` returns `true` if and only if `other` has `termType` `"BlankNode"` and the same `value`.
 
 ### Literal extends Term
 
@@ -61,12 +69,20 @@ Abstract interface.
 If the literal has a language, the datatype IRI is `http://www.w3.org/1999/02/22-rdf-syntax-ns#langString`.
 Otherwise, if no datatype is explicitly specified, the datatype IRI is `http://www.w3.org/2001/XMLSchema#string`.
 
+**Methods:**
+
+- `boolean .equals(Term other)` returns `true` if and only if `other` has `termType` `"Literal"` and the same `value`, `language`, and `datatype`.
+
 ### Variable extends Term
 
 **Properties:**
 
 - `string .termType` contains the constant `"Variable"`.
 - `string .value` the name of the variable without leading `?` (example: `a`)
+
+**Methods:**
+
+- `boolean .equals(Term other)` returns `true` if and only if `other` has `termType` `"Variable"` and the same `value`.
 
 ### DefaultGraph extends Term
 
@@ -77,6 +93,10 @@ It's only allowed to assign a `DefaultGraph` to the `.graph` property of a `Quad
 
 - `string .termType` contains the constant `"DefaultGraph"`.
 - `string .value` contains an empty string as constant value.
+
+**Methods:**
+
+- `boolean .equals(Term other)` returns `true` if and only if `other` has `termType` `"DefaultGraph"`.
 
 ### Triple
 
