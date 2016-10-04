@@ -144,9 +144,11 @@ This requires only a single queue per stream, which simplifies implementations a
 
 **Methods:**
 
-- `Quad .read()`
-  This method pulls a quad out of the internal buffer and returns it.
-  If there is no quad available, then it will return null.
+- `any .read([number size])`
+  This method pulls some data out of the internal buffer and returns it.
+  If the streams emits `Quad` objects, a single quad is pulled out of the internal buffer.
+  Streams for other types of data may support reading a specific amount of data using the `size` parameter.
+  If there is no data/quad available, then it will return null.
 
 **Events:**
 
@@ -161,8 +163,9 @@ This requires only a single queue per stream, which simplifies implementations a
   The error message is forwarded to the event listener.
 
 - `data`
-  This event is emitted for every quad that can be read from the stream.
-  The quad is forwarded to the event listener.
+  This event is emitted for every chunk of data that can be read from the stream.
+  If the stream emits `Quad` objects, the event is emitted for every single quad.
+  The chunk or quad is forwarded to the event listener.
 
 - `prefix`
   This event is emitted every time a prefix map occurs in the stream.
@@ -174,7 +177,7 @@ A Source is an object that emits quads.
 It can contain quads but also generate them on the fly.
 For example, parsers and transformations which generate quads can implement the Source interface.
 
-- `Stream .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
+- `Stream<Quad> .match([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
   Returns a stream that processes all quads matching the pattern.
 
 ### Sink
@@ -183,7 +186,7 @@ A Sink is an object that consumes quads.
 It can store the quads or do some further processing.
 For example serializers and transformations which consume quads can implement the Sink interface.
 
-- `undefined .import(Stream stream)`
+- `undefined .import(Stream<Quad> stream)`
   Writes all quads from the stream to the sink.
 
 ### Store extends Source, Sink
@@ -204,3 +207,13 @@ Access to stores LDP or SPARQL endpoints can be implemented with a Store intefac
 - `EventEmitter .deleteGraph(Term|string graph)`
   Deletes the given named graph.
   The `end` and `error` events are used like described in the `Stream` interface.
+
+### Reader
+
+A Reader is an object that translates one stream to another stream.
+The input and output stream may emit quads or custom formats.
+The Reader interface can be used for parsers and serializer, but also for quad or custom format transformations.
+Implementations may support reading from addition data types like String or Buffer.
+
+- `Stream .read(Stream input)`
+  Creates a `Stream` which emits data based on the `input` stream.
