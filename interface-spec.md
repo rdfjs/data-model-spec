@@ -200,7 +200,3 @@ Access to stores LDP or SPARQL endpoints can be implemented with a Store intefac
 - `EventEmitter .removeMatches([Term|RegExp subject], [Term|RegExp predicate], [Term|RegExp object], [Term|RegExp graph])`
   All quads matching the pattern will be removed.
   The `end` and `error` events are used like described in the `Stream` interface.
-
-- `EventEmitter .deleteGraph(Term|string graph)`
-  Deletes the given named graph.
-  The `end` and `error` events are used like described in the `Stream` interface.
