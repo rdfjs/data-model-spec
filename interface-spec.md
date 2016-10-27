@@ -150,23 +150,25 @@ This requires only a single queue per stream, which simplifies implementations a
 
 **Events:**
 
-- `readable`
+- `readable()`
   When a quad can be read from the stream, it will emit this event.
 
-- `end`
+- `end()`
   This event fires when there will be no more quads to read.
 
-- `error`
+- `error(string message)`
   This event fires if any error occurs.
-  The error message is forwarded to the event listener.
+  The `message` describes the error.
 
-- `data`
+- `data(Quad quad)`
   This event is emitted for every quad that can be read from the stream.
-  The quad is forwarded to the event listener.
+  The `quad` is the content of the data.
 
-- `prefix`
-  This event is emitted every time a prefix map occurs in the stream.
-  The prefix map is forwarded to the event listener.
+**_Optional_ Events:**
+These events are not required, but if an implementation wishes to support such events, they should conform to these definitions:
+
+- `prefix(string prefix, NamedNode iri)`
+  This event is emitted every time a prefix is mapped to some IRI.
 
 ### Source
 
