@@ -6,4 +6,4 @@ We strive to design interface specifications with the goal that different JavaSc
 The focus on this first [low level](https://github.com/rdfjs/rdfjs.org/wiki/Architecture#low-level) interface is to find a minimal API for access of RDF data which can be shared by JS Libraries.
 
 This repository contains documents created by the Representation Task Force:
-- [Interface Specification (Low Level)](https://github.com/rdfjs/representation-task-force/blob/master/interface-spec.md)
+- [RDFJS Interface Specification (Low Level)](https://github.com/rdfjs/representation-task-force/blob/master/interface-spec.md)
