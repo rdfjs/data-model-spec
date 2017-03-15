@@ -185,7 +185,7 @@ A Sink is an object that consumes quads.
 It can store the quads or do some further processing.
 For example serializers and transformations which consume quads can implement the Sink interface.
 
-- `undefined .import(Stream stream)`
+- `EventEmitter .import(Stream stream)`
   Writes all quads from the stream to the sink.
 
 ### Store extends Source, Sink
