@@ -156,7 +156,7 @@ This requires only a single queue per stream, which simplifies implementations a
 - `end()`
   This event fires when there will be no more quads to read.
 
-- `error(string message)`
+- `error(Error error)`
   This event fires if any error occurs.
   The `message` describes the error.
 
