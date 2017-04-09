@@ -125,7 +125,7 @@ see the individual [interface definitions](#data-interfaces)
 - `NamedNode .namedNode(string value)` returns a new instance of NamedNode.
 - `BlankNode .blankNode([string value])` returns a new instance of BlankNode.
   If the value parameter is undefined a new identifier for the blank node is generated for each call.
-- `Literal .literal(string value, [string languageOrDatatype])` returns a new
+- `Literal .literal(string value, [string|NamedNode languageOrDatatype])` returns a new
   instance of Literal. If languageOrDatatype is a NamedNode, then it is used for the value of `.datatype`.
   Otherwise languageOrDatatype is used for the value of `.language`.
 - `Variable .variable(string value)` returns a new instance of Variable. This method is optional.
