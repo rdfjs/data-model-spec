@@ -192,13 +192,13 @@ For example parsers, serializers, transformations and stores can implement the S
 
   Typical use cases:
 
-  **Parser:** `Source .import(Stream stream)`
+  **Parser:** `Stream<Quad> .import(Stream stream)`
 
-  **Serializer:** `Stream .import(Source stream)`
+  **Serializer:** `Stream .import(Stream<Quad> stream)`
 
-  **Transformation:** `Source .import(Source stream)`
+  **Transformation:** `Stream<Quad> .import(Stream<Quad> stream)`
 
-  **Store:** `EventEmitter .import(Stream stream)`
+  **Store:** `EventEmitter .import(Stream<Quad> stream)`
 
 ### Store extends Source, Sink
 
