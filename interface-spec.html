@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Interface Specification: RDF Representation</title>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+  <script class="remove">
+    var respecConfig = {
+      specStatus: "CG-DRAFT",
+      shortName: "rdfjs",
+      subtitle: "Interface Specification: RDF Representation",
+      processVersion: 2017,
+      edDraftURI: "https://github.com/rdfjs/representation-task-force/",
+      issueBase: "https://github.com/rdfjs/representation-task-force/issues/",
+      githubAPI: "https://api.github.com/repos/rdfjs/representation-task-force",
+      // TODO: testSuiteURIkey: "",
+      editors: [{
+        name: "Thomas Bergwinkl",
+        url: "https://www.bergnet.org/people/bergi/card#me",
+        company: "Zazuko",
+        companyURL: "http://zazuko.com/"
+      }],
+      authors:  [],
+      bugTracker:             {
+        open: "https://github.com/rdfjs/representation-task-force/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20",
+        new:  "https://github.com/rdfjs/representation-task-force/issues/new"
+      },
+      otherLinks: [{
+        key: "Version control",
+        data: [{
+          value: "Github Repository",
+          href: "https://github.com/rdfjs/representation-task-force"
+        }]
+      }],
+      wg: "RDF JavaScript Libraries Community Group",
+      wgURI: "https://www.w3.org/community/rdfjs/",
+      wgPublicList: "public-rdfjs",
+      maxTocLevel: 2
+    };
+  </script>
+</head>
+<body>
+<section id="abstract">
+  <p>
+  </p>
+</section>
+
+<section id="sotd">
+  <p>
+    This document provides a specification of a low level interface definition representing RDF data
+    independent of a serialized format in a JavaScript environment. The task force which defines
+    this interface was formed by RDF JavaScript library developers with the wish to make existing
+    and future libraries interoperable. This definition strives to provide the minimal necessary
+    interface to enable interoperability of libraries such as serializers, parsers and higher level
+    accessors and manipulators.
+  </p>
+</section>
+
+<section>
+  <h2>Design elements and principles</h2>
+
+  <ul>
+    <li>
+      We define data interfaces to represent <strong>triples</strong>, <strong>quads</strong>,
+      <strong>named nodes</strong>, <strong>blank nodes</strong>, <strong>literals</strong> and
+      <strong>variables</strong>.
+    </li>
+    <li>Instances of the interfaces created with different libraries should be interoperable.</li>
+    <li>Interfaces do <em>not</em> specify how instances are stored in memory.</li>
+    <li>Interfaces mandate specific pre-defined methods such as <code>.equals()</code>.</li>
+    <li>Given the necessity of methods, plain objects (JSON) cannot be used.</li>
+    <li>
+      Factory functions (e.g., <code>quad()</code>) or methods (e.g.,
+      <code>store.createQuad()</code>) create instances.
+    </li>
+    <li>Should allow "upgrading" a plain object into a fully functional triple</li>
+    <li>Interfaces may have additional implementation specific properties.</li>
+  </ul>
+
+  <p>
+    A list of these properties maintained on the
+    <a href="https://github.com/rdfjs/representation-task-force/wiki/Additional-properties">
+      RDFJS Representation Task Force wiki
+    </a>.
+  </p>
+</section>
+
+<section>
+  <h2>Data interfaces</h2>
+
+  <img src="img/data_diagram.png" alt="UML data interface diagram" style="width: 100%;">
+
+
+  <section data-dfn-for="Term">
+    <h3><dfn>Term</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Term {
+      attribute string termType;
+      attribute string value;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      <a>Term</a> is an abstract interface.
+    </p>
+    <p>
+      <dfn>termType</dfn> contains a value that identifies the concrete interface of the term, since
+      Term itself is not directly instantiated. Possible values include <code>"NamedNode"</code>,
+      <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code> and
+      <code>"DefaultGraph"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> is refined by each interface which extends Term.
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has the same
+      <code>termType</code> and the same contents (as defined by concrete subclasses).
+    </p>
+  </section>
+
+  <section data-dfn-for="NamedNode">
+    <h3><dfn>NamedNode</dfn> interface</h3>
+
+    <pre class="idl">
+    interface NamedNode : Term {
+      attribute string termType;
+      attribute string value;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"NamedNode"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> the IRI of the named node (example: <code>"http://example.org/resource"</code>).
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
+      <code>termType</code> <code>"NamedNode"</code> and the same <code></code>value</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="BlankNode">
+    <h3><dfn>BlankNode</dfn> interface</h3>
+
+    <pre class="idl">
+    interface BlankNode : Term {
+      attribute string termType;
+      attribute string value;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"BlankNode"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> blank node name as a string, without any serialization specific prefixes,
+      e.g. when parsing, if the data was sourced from Turtle, remove <code>"_:"</code>, if it was
+      sourced from RDF/XML, do not change the blank node name (example: <code>"blank3"</code>)
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
+      <code>termType</code> <code>"BlankNode"</code> and the same <code>value</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="Literal">
+    <h3><dfn>Literal</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Literal : Term {
+      attribute string termType;
+      attribute string value;
+      attribute string language;
+      attribute NamedNode datatype;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"Literal"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> the text value, unescaped, without language or type (example:
+      <code>"Brad Pitt"</code>)
+    </p>
+    <p>
+      <dfn>language</dfn> the language as lowercase BCP-47 [[!BCP47]] string (examples:
+      <code>"en"</code>, <code>"en-gb"</code>) or an empty string if the literal has no language.
+    </p>
+    <p>
+      <dfn>datatype</dfn> a <code>NamedNode</code> whose IRI represents the datatype of the literal.
+    </p>
+    <p>
+      If the literal has a language, its datatype has the IRI
+      <code>"http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"</code>. Otherwise, if no
+      datatype is explicitly specified, the datatype has the IRI
+      <code>"http://www.w3.org/2001/XMLSchema#string"</code>.
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
+      <code>termType</code> <code>"Literal"</code> and the same <code>value</code>,
+      <code>language</code>, and <code>datatype</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="Variable">
+    <h3><dfn>Variable</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Variable : Term {
+      attribute string termType;
+      attribute string value;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"Variable"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> the name of the variable without leading <code>"?"</code> (example:
+      <code>"a"</code>).
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
+      <code>termType</code> <code>"Variable"</code> and the same <code>value</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="DefaultGraph">
+    <h3><dfn>DefaultGraph</dfn> interface</h3>
+
+    <pre class="idl">
+    interface DefaultGraph : Term {
+      attribute string termType;
+      attribute string value;
+      boolean equals(Term other);
+    };
+    </pre>
+
+    <p>
+      An instance of <code>DefaultGraph</code> represents the default graph. It's only allowed to
+      assign a <code>DefaultGraph</code> to the <code>graph</code> property of a <code>Quad</code>.
+    </p>
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"DefaultGraph"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> contains an empty string as constant value.
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
+      <code>termType</code> <code>"DefaultGraph"</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="Triple">
+    <h3><dfn>Triple</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Triple {};
+
+    Triple implements Quad;
+    </pre>
+
+    <p>
+      Triple is an alias of Quad.
+    </p>
+  </section>
+
+  <section data-dfn-for="Quad">
+    <h3><dfn>Quad</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Quad {
+      attribute Term subject;
+      attribute Term predicate;
+      attribute Term object;
+      attribute Term graph;
+      boolean equals(Quad other);
+    };
+    </pre>
+
+    <p>
+      <dfn>subject</dfn> the subject, which is a <code>NamedNode</code>, <code>BlankNode</code> or
+      <code>Variable</code>.
+    </p>
+    <p>
+      <dfn>predicate</dfn> the predicate, which is a <code>NamedNode</code> or
+      <code>Variable</code>.
+    </p>
+    <p>
+      <dfn>object</dfn> the object, which is a <code>NamedNode</code>, <code>Literal</code>,
+      <code>BlankNode</code> or <code>Variable</code>.
+    </p>
+    <p>
+      <dfn>graph</dfn> the named graph, which is a <code>DefaultGraph</code>,
+      <code>NamedNode</code>, <code>BlankNode</code> or <code>Variable</code>.
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if and only if the argument is a) of the same
+      type b) has all components equal.
+    </p>
+  </section>
+
+  <section data-dfn-for="DataFactory">
+    <h3><dfn>DataFactory</dfn> interface</h3>
+
+    <pre class="idl">
+    interface DataFactory {
+      NamedNode namedNode(string value);
+      BlankNode blankNode(optional string value);
+      Literal literal(string value, optional (string or NamedNode) languageOrDatatype);
+      Variable variable(string value);
+      DefaultGraph defaultGraph();
+      Quad triple(Term subject, Term predicate, Term object);
+      Quad quad(Term subject, Term predicate, Term object, optional Term graph);
+    };
+    </pre>
+
+    <p>
+      For default values of the instance properties and valid values requirements,
+      see the individual <a href="#data-interfaces">interface definitions</a>.
+    </p>
+    <p>
+      <dfn>namedNode()</dfn> returns a new instance of <code>NamedNode</code>.
+    </p>
+    <p>
+      <dfn>blankNode()</dfn> returns a new instance of <code>BlankNode</code>. If the value
+      parameter is undefined a new identifier for the blank node is generated for each call.
+    </p>
+    <p>
+      <dfn>literal()</dfn> returns a new instance of <code>Literal</code>. If
+      <code>languageOrDatatype</code> is a <code>NamedNode</code>, then it is used for the value of
+      <code>datatype</code>. Otherwise <code>languageOrDatatype</code> is used for the value of
+      <code>language</code>.
+    </p>
+    <p>
+      <dfn>variable()</dfn> returns a new instance of <code>Variable</code>. This method is
+      optional.
+    </p>
+    <p>
+      <dfn>defaultGraph()</dfn> returns an instance of <code>DefaultGraph</code>.
+    </p>
+    <p>
+      <dfn>triple()</dfn> returns a new instance of <code>Quad</code> with <code>graph</code> set to
+      <code>DefaultGraph</code>.
+    </p>
+    <p>
+      <dfn>quad()</dfn>returns a new instance of <code>Quad</code>.
+    </p>
+  </section>
+</section>
+
+<section>
+  <h2>Stream interfaces</h2>
+  <p>
+    Streams are used only in a readable manner. This requires only a single queue per stream, which
+    simplifies implementations and doesn't have performance drawbacks, compared to writeable
+    streams.
+  </p>
+
+  <img src="img/stream_diagram.png" alt="UML data interface diagram" style="width: 100%;">
+
+  <section data-dfn-for="Stream">
+    <h3><dfn>Stream</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Stream : EventEmitter {
+      Quad read();
+      attribute Event readable;
+      attribute Event end;
+      attribute Event error;
+      attribute Event data;
+      attribute Event prefix;
+    };
+    </pre>
+
+    <p>
+      <dfn>read()</dfn> This method pulls a quad out of the internal buffer and returns it. If there
+      is no quad available, then it will return null.
+    </p>
+    <p>
+      <dfn>readable</dfn> When a quad can be read from the stream, it will emit this event.
+    </p>
+    <p>
+      <dfn>end</dfn> This event fires when there will be no more quads to read.
+    </p>
+    <p>
+      <dfn>error</dfn> `error(Error error)` This event fires if any error occurs. The `message` describes the error.
+    </p>
+    <p>
+      <dfn>data</dfn> `data(Quad quad)` This event is emitted for every quad that can be read from the stream. The `quad` is the content of the data.
+    </p>
+    <h4>Optional Events</h4>
+    <p>
+      These events are not required, but if an implementation wishes to support such events, they should conform to these definitions:
+    </p>
+    <p>
+      <dfn>prefix</dfn> `prefix(string prefix, NamedNode iri)` This event is emitted every time a prefix is mapped to some IRI.
+    </p>
+  </section>
+
+  <section data-dfn-for="Source">
+    <h3><dfn>Source</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Source {
+      Stream match(optional (Term or RegExp) subject, optional (Term or RegExp) predicate, optional (Term or RegExp) object, optional (Term or RegExp) graph);
+    };
+    </pre>
+
+    <p>
+      A Source is an object that emits quads. It can contain quads but also generate them on the
+      fly. For example, parsers and transformations which generate quads can implement the Source
+      interface.
+    </p>
+    <p>
+      <dfn>match()</dfn> Returns a stream that processes all quads matching the pattern.
+    </p>
+  </section>
+
+  <section data-dfn-for="Sink">
+    <h3><dfn>Sink</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Sink {
+      EventEmitter import(Stream stream);
+    };
+    </pre>
+
+    <p>
+      A Sink is an object that consumes data from different kinds of streams. It can store the
+      content of the stream or do some further processing. For example parsers, serializers,
+      transformations and stores can implement the Sink interface.
+    </p>
+    <p>
+      <dfn>import()</dfn> Consumes the given stream. The <code>end</code> and <code>error</code>
+      events are used like described in the <code>Stream</code> interface. Depending on the use
+      case, subtypes of <code>EventEmitter</code> or <code>Stream</code> are used.
+    </p>
+    <h4>Typical use cases</h4>
+    <ul>
+      <li><strong>Parser:</strong><pre>Stream&lt;Quad&gt; import(Stream stream)</pre></li>
+      <li><strong>Serializer</strong><pre>Stream import(Stream&lt;Quad&gt; stream)</pre></li>
+      <li><strong>Transformation</strong><pre>Stream&lt;Quad&gt; import(Stream&lt;Quad&gt; stream)</pre></li>
+      <li><strong>Store</strong><pre>EventEmitter .import(Stream&lt;Quad&gt; stream)</pre></li>
+    </ul>
+  </section>
+
+  <section data-dfn-for="Store">
+    <h3><dfn>Store</dfn> interface</h3>
+
+    <pre class="idl">
+    interface Store {
+      EventEmitter remove(Stream stream);
+      EventEmitter removeMatches(optional (Term or RegExp) subject, optional (Term or RegExp) predicate, optional (Term or RegExp) object, optional (Term or RegExp) graph);
+      EventEmitter deleteGraph((Term or string) graph);
+    };
+
+    Store implements Source;
+    Store implements Sink;
+    </pre>
+
+    <p>
+      A Store is an object that usually used to persist quads. The interface allows removing quads,
+      beside read and write access. The quads can be stored locally or remotely. Access to stores
+      LDP or SPARQL endpoints can be implemented with a Store inteface.
+    </p>
+    <p>
+      <dfn>remove()</dfn> Removes all streamed quads. The <code>end</code> and <code>error</code>
+      events are used like described in the <code>Stream</code> interface.
+    </p>
+    <p>
+      <dfn>removeMatches()</dfn> All quads matching the pattern will be removed. The
+      <code>end</code> and <code>error</code> events are used like described in the
+      <code>Stream</code> interface.
+    </p>
+    <p>
+      <dfn>deleteGraph()</dfn> Deletes the given named graph. The <code>end</code> and
+      <code>error</code> events are used like described in the <code>Stream</code> interface.
+    </p>
+  </section>
+</section>
+</body>
+</html>
