@@ -181,12 +181,24 @@ For example, parsers and transformations which generate quads can implement the 
 
 ### Sink
 
-A Sink is an object that consumes quads.
-It can store the quads or do some further processing.
-For example serializers and transformations which consume quads can implement the Sink interface.
+A Sink is an object that consumes data from different kinds of streams.
+It can store the content of the stream or do some further processing.
+For example parsers, serializers, transformations and stores can implement the Sink interface.
 
 - `EventEmitter .import(Stream stream)`
-  Writes all quads from the stream to the sink.
+  Consumes the given stream.
+  The `end` and `error` events are used like described in the `Stream` interface.
+  Depending on the use case, subtypes of `EventEmitter` or `Stream` are used.
+
+  Typical use cases:
+
+  **Parser:** `Stream<Quad> .import(Stream stream)`
+
+  **Serializer:** `Stream .import(Stream<Quad> stream)`
+
+  **Transformation:** `Stream<Quad> .import(Stream<Quad> stream)`
+
+  **Store:** `EventEmitter .import(Stream<Quad> stream)`
 
 ### Store extends Source, Sink
 
