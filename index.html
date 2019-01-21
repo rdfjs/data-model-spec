@@ -345,8 +345,20 @@
       <code>Triple</code> MUST be represented as <code>Quad</code> with <code>graph</code> set to a <code>DefaultGraph</code>
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if the argument is a) of the same
-      type b) has all components equal.
+      <dfn>equals()</dfn> returns <code>true</code>
+      when called with parameter <code>other</code>
+      on an object <code>quad</code> if
+      all of the conditions below hold:
+    </p>
+    <ul>
+      <li><code>other</code> is <em>neither</em> <code>null</code> nor <code>undefined</code>;</li>
+      <li><code>quad.subject.equals(other.subject)</code> evaluates to <code>true</code>;</li>
+      <li><code>quad.predicate.equals(other.predicate)</code> evaluates to <code>true</code>;</li>
+      <li><code>quad.object.equals(other.object)</code> evaluates to a <code>true</code>;</li>
+      <li><code>quad.graph.equals(other.graph)</code> evaluates to a <code>true</code>;</li>
+    </ul>
+    <p>
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
