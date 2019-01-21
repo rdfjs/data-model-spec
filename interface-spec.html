@@ -442,7 +442,7 @@
 
     <pre class="idl">
     interface Source {
-      Stream match(optional (Term or RegExp) subject, optional (Term or RegExp) predicate, optional (Term or RegExp) object, optional (Term or RegExp) graph);
+      Stream match(optional Term? subject, optional Term? predicate, optional Term? object, optional Term? graph);
     };
     </pre>
 
@@ -490,7 +490,7 @@
     <pre class="idl">
     interface Store {
       EventEmitter remove(Stream stream);
-      EventEmitter removeMatches(optional (Term or RegExp) subject, optional (Term or RegExp) predicate, optional (Term or RegExp) object, optional (Term or RegExp) graph);
+      EventEmitter removeMatches(optional Term? subject, optional Term? predicate, optional Term? object, optional Term? graph);
       EventEmitter deleteGraph((Term or string) graph);
     };
 
