@@ -148,8 +148,18 @@
       <dfn>value</dfn> is refined by each interface which extends Term.
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has the same
-      <code>termType</code> and the same contents (as defined by concrete subclasses).
+      <dfn>equals()</dfn> returns <code>true</code>
+      when called with parameter <code>other</code>
+      on an object <code>term</code> if all of the conditions below hold:
+    </p>
+    <ul>
+      <li><code>other</code> is <em>neither</em> <code>null</code> nor <code>undefined</code>;</li>
+      <li><code>term.termType</code> is the same string as <code>other.termType</code>;</li>
+      <li><code>other</code> follows the additional constraints of the specific <code>Term</code> interface implemented by <code>term</code>
+        (e.g., <a>NamedNode</a>, <a>Literal</a>, …);</li>
+    </ul>
+    <p>
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
@@ -171,8 +181,10 @@
       <dfn>value</dfn> the IRI of the named node (example: <code>"http://example.org/resource"</code>).
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
-      <code>termType</code> <code>"NamedNode"</code> and the same <code></code>value</code>.
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all general <a>Term.equals</a> conditions hold
+      and <code>term.value</code> is the same string as <code>other.value</code>;
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
@@ -196,8 +208,10 @@
       sourced from RDF/XML, do not change the blank node name (example: <code>"blank3"</code>)
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
-      <code>termType</code> <code>"BlankNode"</code> and the same <code>value</code>.
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all general <a>Term.equals</a> conditions hold
+      and <code>term.value</code> is the same string as <code>other.value</code>;
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
@@ -235,9 +249,12 @@
       <code>"http://www.w3.org/2001/XMLSchema#string"</code>.
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
-      <code>termType</code> <code>"Literal"</code> and the same <code>value</code>,
-      <code>language</code>, and <code>datatype</code>.
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all general <a>Term.equals</a> conditions hold,
+      <code>term.value</code> is the same string as <code>other.value</code>,
+      <code>term.language</code> is the same string as <code>other.language</code>, and
+      <code>term.datatype.equals(other.datatype)</code> evaluates to <code>true</code>;
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
@@ -260,8 +277,10 @@
       <code>"a"</code>).
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
-      <code>termType</code> <code>"Variable"</code> and the same <code>value</code>.
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all general <a>Term.equals</a> conditions hold
+      and <code>term.value</code> is the same string as <code>other.value</code>;
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
@@ -287,8 +306,9 @@
       <dfn>value</dfn> contains an empty string as constant value.
     </p>
     <p>
-      <dfn>equals()</dfn> returns <code>true</code> if and only if <code>other</code> has
-      <code>termType</code> <code>"DefaultGraph"</code>.
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all general <a>Term.equals</a> conditions hold;
+      otherwise, it returns <code>false</code>.
     </p>
   </section>
 
