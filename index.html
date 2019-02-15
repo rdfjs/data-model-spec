@@ -92,7 +92,7 @@
 
   <ul>
     <li>
-      We define data interfaces to represent <strong>triples</strong>, <strong>quads</strong>,
+      We define data interfaces to represent <strong>quads</strong>,
       <strong>named nodes</strong>, <strong>blank nodes</strong>, <strong>literals</strong> and
       <strong>variables</strong>.
     </li>
@@ -288,20 +288,6 @@
     </p>
   </section>
 
-  <section data-dfn-for="Triple">
-    <h3><dfn>Triple</dfn> interface</h3>
-
-    <pre class="idl">
-    interface Triple {};
-
-    Triple implements Quad;
-    </pre>
-
-    <p>
-      Triple is an alias of Quad.
-    </p>
-  </section>
-
   <section data-dfn-for="Quad">
     <h3><dfn>Quad</dfn> interface</h3>
 
@@ -331,6 +317,9 @@
       <dfn>graph</dfn> the named graph, which is a <code>DefaultGraph</code>,
       <code>NamedNode</code>, <code>BlankNode</code> or <code>Variable</code>.
     </p>
+    <p class="note">
+      <code>Triple</code> MUST be represented as <code>Quad</code> with <code>graph</code> set to a <code>DefaultGraph</code>
+    </p>
     <p>
       <dfn>equals()</dfn> returns <code>true</code> if and only if the argument is a) of the same
       type b) has all components equal.
@@ -347,8 +336,7 @@
       Literal literal(string value, optional (string or NamedNode) languageOrDatatype);
       Variable variable(string value);
       DefaultGraph defaultGraph();
-      Quad triple(Term subject, Term predicate, Term object);
-      Quad quad(Term subject, Term predicate, Term object, optional Term graph);
+      Quad quad(Term subject, Term predicate, Term object, optional Term? graph);
     };
     </pre>
 
@@ -377,11 +365,9 @@
       <dfn>defaultGraph()</dfn> returns an instance of <code>DefaultGraph</code>.
     </p>
     <p>
-      <dfn>triple()</dfn> returns a new instance of <code>Quad</code> with <code>graph</code> set to
-      <code>DefaultGraph</code>.
-    </p>
-    <p>
       <dfn>quad()</dfn>returns a new instance of <code>Quad</code>.
+      If <code>graph</code> is <code>undefined</code> or <code>null</code>
+      it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
     </p>
   </section>
 </section>
