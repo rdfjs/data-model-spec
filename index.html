@@ -438,6 +438,11 @@
     <p>
       <dfn>match()</dfn> Returns a stream that processes all quads matching the pattern.
     </p>
+    <p class="note">
+      When matching with <code>graph</code> set to <code>undefined</code> or <code>null</code>
+      it MUST match all the graphs (sometimes called <em>the union graph</em>). To match only <em>the default graph</em>
+      set <code>graph</code> to a <code>DefaultGraph</code>.
+    </p>
   </section>
 
   <section data-dfn-for="Sink">
