@@ -372,12 +372,13 @@
       it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
     </p>
     <p>
-      <dfn>fromTerm()</dfn> returns a new instance of specific <code>Term</code> subclass,
-      which passed to <code>original.equals()</code> returns <code>true</code>
+      <dfn>fromTerm()</dfn> returns a new instance of the specific <code>Term</code> subclass given by `original.termType`
+      (e.g., `NamedNode`, `BlankNode`, `Literal`, etc.),
+      such that <code>newObject.equals(original)</code> returns <code>true</code>.
     </p>
     <p>
       <dfn>fromQuad()</dfn> returns a new instance of <code>Quad</code>,
-      which passed to <code>original.equals()</code> returns <code>true</code>
+      such that <code>newObject.equals(original)</code> returns <code>true</code>.
     </p>
   </section>
 </section>
