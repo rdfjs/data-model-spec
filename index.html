@@ -131,7 +131,7 @@
     interface Term {
       attribute string termType;
       attribute string value;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -170,7 +170,7 @@
     interface NamedNode : Term {
       attribute string termType;
       attribute string value;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -195,7 +195,7 @@
     interface BlankNode : Term {
       attribute string termType;
       attribute string value;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -224,7 +224,7 @@
       attribute string value;
       attribute string language;
       attribute NamedNode datatype;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -265,7 +265,7 @@
     interface Variable : Term {
       attribute string termType;
       attribute string value;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -291,7 +291,7 @@
     interface DefaultGraph : Term {
       attribute string termType;
       attribute string value;
-      boolean equals(Term other);
+      boolean equals(optional Term? other);
     };
     </pre>
 
@@ -321,7 +321,7 @@
       attribute Term predicate;
       attribute Term object;
       attribute Term graph;
-      boolean equals(Quad other);
+      boolean equals(optional Quad? other);
     };
     </pre>
 
