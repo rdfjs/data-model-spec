@@ -100,7 +100,7 @@
     <li>Interfaces do <em>not</em> specify how instances are stored in memory.</li>
     <li>Interfaces mandate specific pre-defined methods such as <code>.equals()</code>.</li>
     <li>
-       Interfaces are not expected to expose internal objects or return the same object from sucessive calls. Callers shoud use the `Term.equals()` function instead of `===` or `==` to test for equivalence. 
+       Interfaces are not expected to expose internal objects or return the same object from sucessive calls. Equivalence is tested with the `Term.equals()` function instead of `===` or `==`. 
     </li>
     <li>
       Factory functions (e.g., <code>quad()</code>) or methods (e.g.,
