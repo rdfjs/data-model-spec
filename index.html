@@ -376,6 +376,8 @@
       Variable variable(string value);
       DefaultGraph defaultGraph();
       Quad quad(Term subject, Term predicate, Term object, optional Term? graph);
+      Term fromTerm(Term original);
+      Quad fromQuad(Quad original);
     };
     </pre>
 
@@ -407,6 +409,15 @@
       <dfn>quad()</dfn>returns a new instance of <code>Quad</code>.
       If <code>graph</code> is <code>undefined</code> or <code>null</code>
       it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
+    </p>
+    <p>
+      <dfn>fromTerm()</dfn> returns a new instance of the specific <code>Term</code> subclass given by <code>original.termType</code>
+      (e.g., <code>NamedNode</code>, <code>BlankNode</code>, <code>Literal</code>, etc.),
+      such that <code>newObject.equals(original)</code> returns <code>true</code>.
+    </p>
+    <p>
+      <dfn>fromQuad()</dfn> returns a new instance of <code>Quad</code>,
+      such that <code>newObject.equals(original)</code> returns <code>true</code>.
     </p>
   </section>
 </section>
