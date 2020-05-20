@@ -51,6 +51,11 @@
         url: "https://ruben.verborgh.org/",
         company: "Ghent University – imec",
         companyURL: "http://idlab.ugent.be/"
+      }, {
+        name: "Ruben Taelman",
+        url: "https://www.rubensworks.net/",
+        company: "Ghent University – imec",
+        companyURL: "http://idlab.ugent.be/"
       }],
       bugTracker:             {
         open: "https://github.com/rdfjs/data-model-spec/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aopen%20",
@@ -144,8 +149,8 @@
     <p>
       <dfn>termType</dfn> contains a value that identifies the concrete interface of the term, since
       Term itself is not directly instantiated. Possible values include <code>"NamedNode"</code>,
-      <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code> and
-      <code>"DefaultGraph"</code>.
+      <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code>, <code>"DefaultGraph"</code>,
+      <code>"Quad"</code> and <code>undefined</code>.
     </p>
     <p>
       <dfn>value</dfn> is refined by each interface which extends Term.
@@ -364,6 +369,41 @@
       otherwise, it returns <code>false</code>.
     </p>
   </section>
+  
+  <section data-dfn-for="QuadTerm">
+    <h3><dfn>QuadTerm</dfn> interface</h3>
+    
+    <div class="warning" title="Experimental!">
+      <p>
+        The <code>QuadTerm</code> interface an experimental part of RDF* support, and is subject to change.
+      </p>
+    </div>
+
+    <pre class="idl">
+    interface QuadTerm : Quad {
+      attribute string termType;
+      attribute string value;
+      boolean equals(optional (Quad | Term)? other);
+    };
+    </pre>
+
+    <p>
+      An instance of <code>QuadTerm</code> is a <code>Quad</code> that is at the same time a <code>Term</code>.
+      This enables a <code>QuadTerm</code> to be used within a <code>Quad</code> or <code>QuadTerm</code>,
+      which enables annotation of statements as introduced by <a href="https://blog.liu.se/olafhartig/2019/01/10/position-statement-rdf-star-and-sparql-star/">RDF*</a>.
+    </p>
+    <p>
+      <dfn>termType</dfn> contains the constant <code>"Quad"</code>.
+    </p>
+    <p>
+      <dfn>value</dfn> contains an empty string as constant value.
+    </p>
+    <p>
+      <dfn>equals()</dfn> returns <code>true</code> if
+      all <a>Quad.equals</a> and all general <a>Term.equals</a> conditions hold;
+      otherwise, it returns <code>false</code>.
+    </p>
+  </section>
 
   <section data-dfn-for="DataFactory">
     <h3><dfn>DataFactory</dfn> interface</h3>
@@ -418,6 +458,39 @@
     <p>
       <dfn>fromQuad()</dfn> returns a new instance of <code>Quad</code>,
       such that <code>newObject.equals(original)</code> returns <code>true</code>.
+    </p>
+  </section>
+
+  <section data-dfn-for="DataFactory">
+    <h3><dfn>DataFactoryStar</dfn> interface</h3>
+    
+    <div class="warning" title="Experimental!">
+      <p>
+        The <code>DataFactoryStar</code> interface an experimental part of RDF* support, and is subject to change.
+      </p>
+    </div>
+
+    <pre class="idl">
+    interface DataFactoryStar : DataFactory {
+      QuadTerm quad(Term subject, Term predicate, Term object, optional Term? graph);
+      QuadTerm fromQuad(Quad original);
+    };
+    </pre>
+
+    <p>
+      The <code>DataFactoryStar</code> interface extends the <code>DataFactory</code> interface,
+      and overrides the <code>quad</code> and <code>fromQuad</code> methods.
+    </p>
+    <p>
+      <dfn>quad()</dfn>returns a new instance of <code>QuadTerm</code>.
+      If <code>graph</code> is <code>undefined</code> or <code>null</code>
+      it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
+    </p>
+    <p>
+      <dfn>fromQuad()</dfn> returns a new instance of <code>QuadTerm</code>.
+      such that <code>original.equals(newObject)</code> returns <code>true</code>.
+      <code>newObject.equals(original)</code> will only return true
+      if <code>original</code> was already an instance of <code>QuadTerm</code>.
     </p>
   </section>
 </section>
