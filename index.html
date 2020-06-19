@@ -144,8 +144,8 @@
     <p>
       <dfn>termType</dfn> contains a value that identifies the concrete interface of the term, since
       Term itself is not directly instantiated. Possible values include <code>"NamedNode"</code>,
-      <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code> and
-      <code>"DefaultGraph"</code>.
+      <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code>,
+      <code>"DefaultGraph"</code> and <code>"Quad"</code>.
     </p>
     <p>
       <dfn>value</dfn> is refined by each interface which extends Term.
@@ -319,7 +319,9 @@
     <h3><dfn>Quad</dfn> interface</h3>
 
     <pre class="idl">
-    interface Quad {
+    interface Quad : Term {
+      attribute string? termType;
+      attribute string? value;
       attribute Term subject;
       attribute Term predicate;
       attribute Term object;
@@ -329,8 +331,15 @@
     </pre>
 
     <p>
-      <dfn>subject</dfn> the subject, which is a <code>NamedNode</code>, <code>BlankNode</code> or
-      <code>Variable</code>.
+      <dfn>termType</dfn> contains the constant <code>"Quad"</code> or <code>undefined</code> if the
+      implementation does not support RDF*.
+    </p>
+    <p>
+      <dfn>value</dfn> contains the constant <code>undefined</code>.
+    </p>
+    <p>
+      <dfn>subject</dfn> the subject, which is a <code>NamedNode</code>, <code>BlankNode</code>,
+      <code>Variable</code> or <code>Quad</code>.
     </p>
     <p>
       <dfn>predicate</dfn> the predicate, which is a <code>NamedNode</code> or
