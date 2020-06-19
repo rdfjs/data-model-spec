@@ -138,7 +138,7 @@
     <pre class="idl">
     interface Term {
       attribute string termType;
-      attribute string value;
+      attribute (string | Quad) value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -150,7 +150,7 @@
       <dfn>termType</dfn> contains a value that identifies the concrete interface of the term, since
       Term itself is not directly instantiated. Possible values include <code>"NamedNode"</code>,
       <code>"BlankNode"</code>, <code>"Literal"</code>, <code>"Variable"</code>, <code>"DefaultGraph"</code>,
-      <code>"Quad"</code> and <code>undefined</code>.
+      <code>"Quad"</code>.
     </p>
     <p>
       <dfn>value</dfn> is refined by each interface which extends Term.
@@ -380,27 +380,27 @@
     </div>
 
     <pre class="idl">
-    interface QuadTerm : Quad {
+    interface QuadTerm : Term {
       attribute string termType;
-      attribute string value;
-      boolean equals(optional (Quad | Term)? other);
+      attribute Quad value;
+      boolean equals(optional Term? other);
     };
     </pre>
 
     <p>
-      An instance of <code>QuadTerm</code> is a <code>Quad</code> that is at the same time a <code>Term</code>.
-      This enables a <code>QuadTerm</code> to be used within a <code>Quad</code> or <code>QuadTerm</code>,
+      An instance of <code>QuadTerm</code> is a <code>Term</code> that contains a <code>Quad</code>,
       which enables annotation of statements as introduced by <a href="https://blog.liu.se/olafhartig/2019/01/10/position-statement-rdf-star-and-sparql-star/">RDF*</a>.
     </p>
     <p>
       <dfn>termType</dfn> contains the constant <code>"Quad"</code>.
     </p>
     <p>
-      <dfn>value</dfn> contains an empty string as constant value.
+      <dfn>value</dfn> contains the encapsulated <code>Quad</code>.
     </p>
     <p>
       <dfn>equals()</dfn> returns <code>true</code> if
-      all <a>Quad.equals</a> and all general <a>Term.equals</a> conditions hold;
+      all general <a>Term.equals</a> conditions hold
+      and <code>term.value</code> are equal <code>other.value</code> according to <code>Quad.equals</code>;
       otherwise, it returns <code>false</code>.
     </p>
   </section>
@@ -416,6 +416,7 @@
       Variable variable(string value);
       DefaultGraph defaultGraph();
       Quad quad(Term subject, Term predicate, Term object, optional Term? graph);
+      QuadTerm quadTerm?(Quad quad);
       Term fromTerm(Term original);
       Quad fromQuad(Quad original);
     };
@@ -451,6 +452,9 @@
       it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
     </p>
     <p>
+      <dfn>quadTerm()</dfn>returns a new instance of <code>QuadTerm</code>.
+    </p>
+    <p>
       <dfn>fromTerm()</dfn> returns a new instance of the specific <code>Term</code> subclass given by <code>original.termType</code>
       (e.g., <code>NamedNode</code>, <code>BlankNode</code>, <code>Literal</code>, etc.),
       such that <code>newObject.equals(original)</code> returns <code>true</code>.
@@ -458,39 +462,6 @@
     <p>
       <dfn>fromQuad()</dfn> returns a new instance of <code>Quad</code>,
       such that <code>newObject.equals(original)</code> returns <code>true</code>.
-    </p>
-  </section>
-
-  <section data-dfn-for="DataFactory">
-    <h3><dfn>DataFactoryStar</dfn> interface</h3>
-    
-    <div class="warning" title="Experimental!">
-      <p>
-        The <code>DataFactoryStar</code> interface an experimental part of RDF* support, and is subject to change.
-      </p>
-    </div>
-
-    <pre class="idl">
-    interface DataFactoryStar : DataFactory {
-      QuadTerm quad(Term subject, Term predicate, Term object, optional Term? graph);
-      QuadTerm fromQuad(Quad original);
-    };
-    </pre>
-
-    <p>
-      The <code>DataFactoryStar</code> interface extends the <code>DataFactory</code> interface,
-      and overrides the <code>quad</code> and <code>fromQuad</code> methods.
-    </p>
-    <p>
-      <dfn>quad()</dfn>returns a new instance of <code>QuadTerm</code>.
-      If <code>graph</code> is <code>undefined</code> or <code>null</code>
-      it MUST set <code>graph</code> to a <code>DefaultGraph</code>.
-    </p>
-    <p>
-      <dfn>fromQuad()</dfn> returns a new instance of <code>QuadTerm</code>.
-      such that <code>original.equals(newObject)</code> returns <code>true</code>.
-      <code>newObject.equals(original)</code> will only return true
-      if <code>original</code> was already an instance of <code>QuadTerm</code>.
     </p>
   </section>
 </section>
