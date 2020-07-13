@@ -320,8 +320,8 @@
 
     <pre class="idl">
     interface Quad : Term {
-      attribute string? termType;
-      attribute string? value;
+      attribute string termType;
+      attribute string value;
       attribute Term subject;
       attribute Term predicate;
       attribute Term object;
@@ -331,11 +331,10 @@
     </pre>
 
     <p>
-      <dfn>termType</dfn> contains the constant <code>"Quad"</code> or <code>undefined</code> if the
-      implementation does not support RDF*.
+      <dfn>termType</dfn> contains the constant <code>"Quad"</code>.
     </p>
     <p>
-      <dfn>value</dfn> contains the constant <code>undefined</code>.
+      <dfn>value</dfn> contains an empty string as constant value.
     </p>
     <p>
       <dfn>subject</dfn> the subject, which is a <code>NamedNode</code>, <code>BlankNode</code>,
