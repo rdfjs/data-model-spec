@@ -131,9 +131,10 @@
     <h3><dfn>Term</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -170,9 +171,10 @@
     <h3><dfn>NamedNode</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface NamedNode : Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -195,9 +197,10 @@
     <h3><dfn>BlankNode</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface BlankNode : Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -222,10 +225,11 @@
     <h3><dfn>Literal</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface Literal : Term {
-      attribute string termType;
-      attribute string value;
-      attribute string language;
+      attribute DOMString termType;
+      attribute DOMString value;
+      attribute DOMString language;
       attribute NamedNode datatype;
       boolean equals(optional Term? other);
     };
@@ -265,9 +269,10 @@
     <h3><dfn>Variable</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface Variable : Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -291,9 +296,10 @@
     <h3><dfn>DefaultGraph</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface DefaultGraph : Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       boolean equals(optional Term? other);
     };
     </pre>
@@ -319,12 +325,13 @@
     <h3><dfn>Quad</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface Quad : Term {
-      attribute string termType;
-      attribute string value;
+      attribute DOMString termType;
+      attribute DOMString value;
       attribute Term subject;
       attribute Term predicate;
-      attribute Term object;
+      attribute Term _object;
       attribute Term graph;
       boolean equals(optional Quad? other);
     };
@@ -377,13 +384,14 @@
     <h3><dfn>DataFactory</dfn> interface</h3>
 
     <pre class="idl">
+    [Exposed=(Window,Worker)]
     interface DataFactory {
-      NamedNode namedNode(string value);
-      BlankNode blankNode(optional string value);
-      Literal literal(string value, optional (string or NamedNode) languageOrDatatype);
-      Variable variable(string value);
+      NamedNode namedNode(DOMString value);
+      BlankNode blankNode(optional DOMString value);
+      Literal literal(DOMString value, optional (DOMString or NamedNode) languageOrDatatype);
+      Variable variable(DOMString value);
       DefaultGraph defaultGraph();
-      Quad quad(Term subject, Term predicate, Term object, optional Term? graph);
+      Quad quad(Term subject, Term predicate, Term _object, optional Term? graph);
       Term fromTerm(Term original);
       Quad fromQuad(Quad original);
     };
