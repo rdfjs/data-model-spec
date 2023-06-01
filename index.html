@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>RDF/JS: Data model specification</title>
-  <script src="https://www.w3.org/Tools/respec/respec-w3c-common" class="remove"></script>
+  <script src="https://www.w3.org/Tools/respec/respec-w3c" class="remove"></script>
   <script class="remove">
     var respecConfig = {
       specStatus: "CG-DRAFT",
@@ -63,8 +63,7 @@
           href: "https://github.com/rdfjs/data-model-spec"
         }]
       }],
-      wg: "RDF JavaScript Libraries Community Group",
-      wgURI: "https://www.w3.org/community/rdfjs/",
+      group: "cg/rdfjs",
       wgPublicList: "public-rdfjs",
       maxTocLevel: 2
     };
@@ -243,7 +242,7 @@
       <code>"Brad Pitt"</code>)
     </p>
     <p>
-      <dfn>language</dfn> the language as lowercase BCP-47 [[!BCP47]] string (examples:
+      <dfn>language</dfn> the language as lowercase [[BCP47]] string (examples:
       <code>"en"</code>, <code>"en-gb"</code>) or an empty string if the literal has no language.
     </p>
     <p>
@@ -437,5 +436,7 @@
     </p>
   </section>
 </section>
+
+<section id="conformance"></section>
 </body>
 </html>
