@@ -225,6 +225,7 @@
       attribute DOMString termType;
       attribute DOMString value;
       attribute DOMString language;
+      attribute DOMString? direction;
       attribute NamedNode datatype;
       boolean equals(optional Term? other);
     };
@@ -242,10 +243,16 @@
       <code>"en"</code>, <code>"en-gb"</code>) or an empty string if the literal has no language.
     </p>
     <p>
+      <dfn>direction</dfn> is defined if the string is a directional language-tagged string.
+      In this case, the <code>direction</code> MUST be either be <code>"ltr"</code> or <code>"rtl"</code>.
+    </p>
+    <p>
       <dfn>datatype</dfn> a <code>NamedNode</code> whose IRI represents the datatype of the literal.
     </p>
     <p>
-      If the literal has a language, its datatype has the IRI
+      If the literal has a language and a direction, its datatype has the IRI
+      <code>"http://www.w3.org/1999/02/22-rdf-syntax-ns#dirLangString"</code>.
+      If the literal has a language without direction, its datatype has the IRI
       <code>"http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"</code>. Otherwise, if no
       datatype is explicitly specified, the datatype has the IRI
       <code>"http://www.w3.org/2001/XMLSchema#string"</code>.
@@ -254,7 +261,8 @@
       <dfn>equals()</dfn> returns <code>true</code> if
       all general <a>Term.equals</a> conditions hold,
       <code>term.value</code> is the same string as <code>other.value</code>,
-      <code>term.language</code> is the same string as <code>other.language</code>, and
+      <code>term.language</code> is the same string as <code>other.language</code>,
+      <code>term.direction</code> is the same string as <code>other.direction</code> or are both undefined, and
       <code>term.datatype.equals(other.datatype)</code> evaluates to <code>true</code>;
       otherwise, it returns <code>false</code>.
     </p>
@@ -383,12 +391,18 @@
     interface DataFactory {
       NamedNode namedNode(DOMString value);
       BlankNode blankNode(optional DOMString value);
-      Literal literal(DOMString value, optional (DOMString or NamedNode) languageOrDatatype);
+      Literal literal(DOMString value, optional (DOMString or NamedNode or DirectionalLanguage) languageOrDatatype);
       Variable variable(DOMString value);
       DefaultGraph defaultGraph();
       Quad quad(Term subject, Term predicate, Term _object, optional Term? graph);
       Term fromTerm(Term original);
       Quad fromQuad(Quad original);
+    };
+
+    [Exposed=(Window,Worker)]
+    interface DirectionalLanguage {
+      attribute DOMString language;
+      attribute DOMString? direction;
     };
     </pre>
 
@@ -404,10 +418,13 @@
       parameter is undefined a new identifier for the blank node is generated for each call.
     </p>
     <p>
-      <dfn>literal()</dfn> returns a new instance of <code>Literal</code>. If
-      <code>languageOrDatatype</code> is a <code>NamedNode</code>, then it is used for the value of
-      <code>datatype</code>. Otherwise <code>languageOrDatatype</code> is used for the value of
-      <code>language</code>.
+      <dfn>literal()</dfn> returns a new instance of <code>Literal</code>.
+      If <code>languageOrDatatype</code> is a <code>NamedNode</code>,
+      then it is used for the value of <code>datatype</code>.
+      If <code>languageOrDatatype</code> is a <code>DirectionalLanguage</code>,
+      then its <code>language</code> and <code>direction</code> attributes
+      are respectively used for the literal's <code>language</code> and <code>direction</code>.
+      Otherwise <code>languageOrDatatype</code> is used for the value of <code>language</code>.
     </p>
     <p>
       <dfn>variable()</dfn> returns a new instance of <code>Variable</code>. This method is
