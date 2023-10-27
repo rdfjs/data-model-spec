@@ -253,7 +253,7 @@
       <code>"en"</code>, <code>"en-gb"</code>) or an empty string if the literal has no language.
     </p>
     <p>
-      <dfn>direction</dfn> is defined if the string is a directional language-tagged string.
+      <dfn>direction</dfn> is not falsy if the string is a directional language-tagged string.
       In this case, the <code>direction</code> MUST be either be <code>"ltr"</code> or <code>"rtl"</code>.
     </p>
     <p>
@@ -272,7 +272,7 @@
       all general <a>Term.equals</a> conditions hold,
       <code>term.value</code> is the same string as <code>other.value</code>,
       <code>term.language</code> is the same string as <code>other.language</code>,
-      <code>term.direction</code> is the same string as <code>other.direction</code> or are both undefined, and
+      <code>term.direction</code> is the same string as <code>other.direction</code> or are both falsy, and
       <code>term.datatype.equals(other.datatype)</code> evaluates to <code>true</code>;
       otherwise, it returns <code>false</code>.
     </p>
@@ -433,7 +433,7 @@
       then it is used for the value of <code>datatype</code>.
       If <code>languageOrDatatype</code> is a <code>DirectionalLanguage</code>,
       then its <code>language</code> and <code>direction</code> attributes
-      are respectively used for the literal's <code>language</code> and <code>direction</code>.
+      are respectively used for the literal's <code>language</code> and <code>direction</code>, where <code>direction</code> is optional or can be falsy.
       Otherwise <code>languageOrDatatype</code> is used for the value of <code>language</code>.
     </p>
     <p>
