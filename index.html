@@ -326,7 +326,7 @@
       attribute DOMString value;
       attribute Term subject;
       attribute Term predicate;
-      attribute Term _object;
+      attribute Term object;
       attribute Term graph;
       boolean equals(optional Quad? other);
     };
@@ -386,7 +386,7 @@
       Literal literal(DOMString value, optional (DOMString or NamedNode) languageOrDatatype);
       Variable variable(DOMString value);
       DefaultGraph defaultGraph();
-      Quad quad(Term subject, Term predicate, Term _object, optional Term? graph);
+      Quad quad(Term subject, Term predicate, Term object, optional Term? graph);
       Term fromTerm(Term original);
       Quad fromQuad(Quad original);
     };
