@@ -255,6 +255,9 @@
     <p>
       <dfn>direction</dfn> is not falsy if the string is a directional language-tagged string.
       In this case, the <code>direction</code> MUST be either be <code>"ltr"</code> or <code>"rtl"</code>.
+      Implementations supporting this feature should use an empty string when no direction is given.
+      <code>null</code> or <code>undefined</code> values are allowed to maintain compatibility with legacy
+      implementations.
     </p>
     <p>
       <dfn>datatype</dfn> a <code>NamedNode</code> whose IRI represents the datatype of the literal.
