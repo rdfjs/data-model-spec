@@ -117,7 +117,7 @@
        Implementations that apply validation should make this fact clear in their documentation.
     </li>
     <li>
-       Instances of <strong>Term</strong> and <strong>Quad</strong> MUST be immutable.
+       Instances of <strong>Term</strong> and <strong>Quad</strong> MUST be immutable, including their fields.
     </li>
   </ul>
 
@@ -149,7 +149,7 @@
 
     <p>
       <a>Term</a> is an abstract interface.
-      All implementations of <a>Term</a> (including <a>Quad</a>) MUST be immutable.
+      All implementations of <a>Term</a> (including <a>Quad</a>) MUST be immutable, including their fields.
     </p>
     <p>
       <dfn>termType</dfn> contains a value that identifies the concrete interface of the term, since
